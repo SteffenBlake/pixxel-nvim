@@ -26,4 +26,4 @@ Can validate it works via executing `omnisharp` and verify output
 # ToDo:
 
 [ ] - https://github.com/aca/emmet-ls  
-[ ] - Fix omnisharp working for local project
+[ ] - https://github.com/terrortylor/nvim-comment

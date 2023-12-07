@@ -245,17 +245,17 @@ require('lazy').setup({
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
+  "jmederosalvarado/roslyn.nvim",
 }, {})
 
 local pid = vim.fn.getpid()
 
-require'lspconfig'.omnisharp.setup {
-  cmd = { "omnisharp" },
-  enable_roslyn_analyzers = true,
-  organize_imports_on_format = true,
-  enable_import_completion = true,
-
-}
+-- require'lspconfig'.omnisharp.setup {
+--   cmd = { "omnisharp" },
+--   enable_roslyn_analyzers = true,
+--   organize_imports_on_format = true,
+--   enable_import_completion = true,
+-- }
 
 require'lspconfig'.tsserver.setup{}
 
@@ -306,6 +306,13 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   callback = function ()
     vim.diagnostic.open_float(nil, {focus=false})
   end
+})
+
+require("roslyn").setup({
+    dotnet_cmd = "dotnet", -- this is the default
+    roslyn_version = "4.8.0-3.23475.7", -- this is the default
+    on_attach = function() end,
+    capabilities = vim.lsp.protocol.make_client_capabilities()
 })
 
 -- [[ Setting options ]]
@@ -762,7 +769,21 @@ local csDapConfig = {
     request = "launch",
     program = function()
       local request = function()
-          return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+        -- local last = vim.fn.expand('%:p');
+        -- local current = vim.fn.fnamemodify(last,':h');
+        -- local proj = ""; 
+        -- vim.api.nvim_echo({{'last: ' .. last}}, false, {})
+        -- vim.api.nvim_echo({{'current: ' .. current}}, false, {})
+
+        -- while (last ~= current and proj == "") do
+        --   last = current;
+        --   current = vim.fn.fnamemodify(current, ':h');
+        --   vim.api.nvim_echo({{'last: ' .. last}}, false, {})
+        --   vim.api.nvim_echo({{'current: ' .. current}}, false, {})
+        --   proj = vim.fn.globpath(current, "*.csproj");
+        -- end
+        -- print(vim.inspect(current));
+        return vim.fn.input('Path to dll', proj .. '/bin/Debug/', 'file')
       end
       if vim.g['dotnet_last_dll_path'] == nil then
           vim.g['dotnet_last_dll_path'] = request()
