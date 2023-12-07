@@ -3,6 +3,15 @@ My personal Neovim configuration
 
 # Installation Requirements:
 
+### treesitter
+#### Chocolate
+https://chocolatey.org/
+#### c/cpp
+```
+choco install mingw
+choco install llvm
+```
+
 ### Omnisharp
 https://github.com/OmniSharp/omnisharp-roslyn
 Once downloaded and installed, must also be added to PATH
