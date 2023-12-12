@@ -36,6 +36,10 @@ Can validate it works via executing `omnisharp` within a C# project and verify o
 ### tsserver LSP
 `npm install -g typescript typescript-language-server`
 
+# How to install this configuration (Windows)
+nvim folder location should be `%LocalAppData%/nvim`, checkout the git repo to that location with that name.
+If done correctly the file `%LocalAppData%/nvim/README.md` should exist.
+
 # Supports Build and Run for dotnet projects
 
 First you must have a launch.json configured in your project root. proj-loader will automatically detect the path `.vs/launch.json` in the root of your project, and it assumes the project root based off the presence of a greedy depth first search of a .csproj file.
