@@ -135,3 +135,11 @@ Another mandatory plugin everyone uses. Searching, Grepping, but also a handy to
 Yup, copilot integration is here and seems to be working. Full info on how to use it on the github repo link above
 
 `F2` - Copilot Suggest  
+
+# Examples
+### Editting
+![Example pic one of neovim setup](assets/Example1.png)
+### LSP Integration and suggestions
+![Example pic setup used in dotnet](assets/Example2.png)
+### Dap UI running interactive debugger
+![Example pic of setup running the dap ui](assets/Example3.png)
