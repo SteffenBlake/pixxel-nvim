@@ -59,6 +59,8 @@ Example `launch.json` file:
 
 proj-loader is configured by to use the found project root (where your .csproj file is) as its relative cwd for the launch.json, so you very likely willl always want your `cwd` entry to be similiar to the one above.
 
+- [ ] TODO: Add support for changing build configs with proj-loader via a User Command
+
 # List of major plugins included in this setup and a quick blurb about them, and relevant keybinds for them
 ## [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
 Debugger and interface. Currently just setup with `netcoredbg` to debug dotnet applications
@@ -133,9 +135,3 @@ Another mandatory plugin everyone uses. Searching, Grepping, but also a handy to
 Yup, copilot integration is here and seems to be working. Full info on how to use it on the github repo link above
 
 `F2` - Copilot Suggest  
-
-# ToDo:
-
-- [ ] https://github.com/aca/emmet-ls  
-- [x] https://github.com/numToStr/Comment.nvim
-- [ ] Add support for changing build configs with proj-loader
