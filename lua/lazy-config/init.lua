@@ -137,9 +137,6 @@ require('lazy').setup({
         opts = {},
     },
 
-    -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim', opts = {} },
-
     -- Fuzzy Finder (files, lsp, etc)
     {
         'nvim-telescope/telescope.nvim',
@@ -197,16 +194,12 @@ require('lazy').setup({
             "nvim-tree/nvim-web-devicons", -- optional dependency
         },
         opts = {
-            -- configurations go here
         },
     },
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
         }
     },
     {
