@@ -27,6 +27,7 @@ Can validate it works via executing `netcoredbg --version` in your terminal
 
 ### Roslyn LSP
 https://github.com/jmederosalvarado/roslyn.nvim
+
 After nvim finishes installing packages, you will need to execute `:CSInstallRoslyn`, at which point the package will download the latest Roslyn package and automatically install it
 
 ### html LSP
