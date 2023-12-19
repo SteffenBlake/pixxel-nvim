@@ -240,4 +240,18 @@ require('lazy').setup({
         },
         lazy = false,
     },
+    'jakewvincent/mkdnflow.nvim',
+    "soulis-1256/hoverhints.nvim",
+    {
+        "nvim-neorg/neorg",
+        ft = 'norg',
+        cmd = 'Neorg',
+        priority = 30,
+        after = 'nvim-treesitter',
+        run = ":Neorg sync-parsers",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function ()
+            require('neorg-config')
+        end
+    }
 }, {})

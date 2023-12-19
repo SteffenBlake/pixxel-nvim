@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local hoverHints = require('hoverhints')
 
 local utils = require("utils")
 
@@ -97,22 +98,24 @@ lspconfig.html.setup {
     filetypes = { "html", "hbs", "handlebars" }
 }
 
-lspconfig.omnisharp.setup {
-    cmd = { "omnisharp" },
-    enable_roslyn_analyzers = true,
-    -- analyze_open_documents_only = true,
-    organize_imports_on_format = true,
-    enable_import_completion = true,
-}
+-- lspconfig.omnisharp.setup {
+--     cmd = { "omnisharp" },
+--     enable_roslyn_analyzers = true,
+--     -- analyze_open_documents_only = true,
+--     organize_imports_on_format = true,
+--     enable_import_completion = true,
+-- }
 
 -- lspconfig.csharp_ls.setup{}
 
--- require("roslyn").setup({
---     dotnet_cmd = "dotnet",              -- this is the default
---     roslyn_version = "4.8.0-3.23475.7", -- this is the default
---     on_attach = on_attach,
---     capabilities = capabilities
--- })
+require("roslyn").setup({
+    dotnet_cmd = "dotnet",              -- this is the default
+    roslyn_version = "4.8.0-3.23475.7", -- this is the default
+    on_attach = on_attach,
+    capabilities = capabilities
+})
+
+hoverHints.setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
