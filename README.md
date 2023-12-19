@@ -25,10 +25,9 @@ https://github.com/Samsung/netcoredbg/releases
 Same as omnisharp, once downloaded and installed, must be added to PATH
 Can validate it works via executing `netcoredbg --version` in your terminal
 
-### Omnisharp LSP
-https://github.com/OmniSharp/omnisharp-roslyn
-Once downloaded and installed, must also be added to PATH
-Can validate it works via executing `omnisharp` within a C# project and verify output
+### Roslyn LSP
+https://github.com/jmederosalvarado/roslyn.nvim
+After nvim finishes installing packages, you will need to execute `:CSInstallRoslyn`, at which point the package will download the latest Roslyn package and automatically install it
 
 ### html LSP
 `npm i -g vscode-langservers-extracted`
@@ -139,6 +138,22 @@ Another mandatory plugin everyone uses. Searching, Grepping, but also a handy to
 Yup, copilot integration is here and seems to be working. Full info on how to use it on the github repo link above
 
 `F2` - Copilot Suggest  
+
+## Neorg
+https://github.com/nvim-neorg/neorg
+Pretty powerful and handy note taking, journal, calender, to-do list, etc AIO for neovim. Lets you designate predifined "workspace" folders your notes/journals etc get saved in.
+My preferred use case is journal+todo lists to have tracked to-do items day by day for work.
+
+There's a solid youtube series on how to use it here:
+https://www.youtube.com/watch?v=NnmRVY22Lq8
+
+Keybinds:
+WIP
+
+Default workspace config:
+* Notes: `~/Documents/notes/` (default workspace)
+* Journal: `~/Documents/journal/`(default journal workspace)
+Note: the above folders will need to exist prior to using any of the Neorg commands, or you'll get some errors
 
 # Examples
 ### Editting
