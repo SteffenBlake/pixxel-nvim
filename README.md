@@ -107,11 +107,6 @@ VSCode style File browser on lefthand side + tabs on the top. nvim-tree supports
 
 - [ ] TODO: Figure out how to fix the fact that barbecue breaks if you open a directory directly with nvim initially, despite the fact that nvim-tree works fine in this scenario
 
-## [context.vim](https://github.com/wellle/context.vim)
-Extremely handy contextual "where am I" tooling that shows what scope you are within at the top of the buffer
-
-- [ ] TODO: `nvim-code-action-menu` jumps us to 0,0 of the buffer if we cancel the code action, which can sometimes be inside the `context` buffer instead of the actual file. Gotta figure out a way to fix this behavior or at least report this as a bug
-
 ## [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar)
 Pretty but minimalist scrollbar on buffers. Has both `lsp-config` integration to show potential code warnings/errors/suggestions, as well as git integration to show status of individual lines
 
@@ -135,13 +130,36 @@ Another mandatory plugin everyone uses. Searching, Grepping, but also a handy to
 `sd` - search diagnostics  
 `sr` - Resume search  
 
-## [copilot.vim](https://github.com/github/copilot.vim)
-Yup, copilot integration is here and seems to be working. Full info on how to use it on the github repo link above
+## [telescope-ui-select](https://github.com/nvim-telescope/telescope-ui-select.nvim)
+Replaces vim's default select picker with above aformentioned telescope's much fancier and prettier picker, which includes filtering options by text input
 
-`F2` - Copilot Suggest  
+## [new-file-template](https://github.com/SteffenBlake/new-file-template.nvim) (custom fork)
+Templating for new files created if they match specific filename matches. Custom fork of the original plugin that switches the API to a callback system to support pickers/inputs with callback patterns
 
-## Neorg
-https://github.com/nvim-neorg/neorg
+#### cs
+Prompts for templates for the following currently supported types:
+* class
+* struct
+* enum
+* interface
+#### lua
+Defaults, built in
+#### Ruby
+Defaults, built in, I dunno how these work tbh they came with the plugin and I dont use ruby so /shrug
+#### Javascript
+WIP, TODO
+#### Typescript
+WIP, TODO
+
+## [lsp-overloads](https://github.com/Issafalcon/lsp-overloads.nvim)
+Extremely handy plugin for toggling visibility of the signature of methods, as well as browsing the method's overloads
+#### keybinds
+`ctrl-s` - Force show overloads popup, for the method currently selected in the buffer
+`alt-s` - Hide the overloads popup
+`ctrl-h/l` - browse the paramaters and their definitions of the current signature
+`ctrl-j/k` - browse the list of overloads
+
+## [Neorg](https://github.com/nvim-neorg/neorg)
 Pretty powerful and handy note taking, journal, calender, to-do list, etc AIO for neovim. Lets you designate predifined "workspace" folders your notes/journals etc get saved in.
 My preferred use case is journal+todo lists to have tracked to-do items day by day for work.
 
