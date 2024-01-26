@@ -23,7 +23,21 @@ require('lazy').setup({
     -- Git related plugins
     'tpope/vim-fugitive',
     'tpope/vim-rhubarb',
-
+    {
+        'romgrk/barbar.nvim',
+        dependencies = {
+            'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
+            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+        },
+        init = function() vim.g.barbar_auto_setup = false end,
+        opts = {
+            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+            -- animation = true,
+            -- insert_at_start = true,
+            -- …etc.
+        },
+        version = '^1.0.0', -- optional: only update when a new 1.x version is released
+    },
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
     {
@@ -42,6 +56,8 @@ require('lazy').setup({
             'folke/neodev.nvim',
         },
     },
+    -- Adds cycling for overloads in signature popups for LSP
+    'Issafalcon/lsp-overloads.nvim',
 
     {
         'weilbith/nvim-code-action-menu',
@@ -60,6 +76,7 @@ require('lazy').setup({
 
             -- Adds a number of user-friendly snippets
             'rafamadriz/friendly-snippets',
+            'onsails/lspkind.nvim',
         },
     },
 
@@ -143,6 +160,7 @@ require('lazy').setup({
         branch = '0.1.x',
         dependencies = {
             'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-ui-select.nvim',
             -- Fuzzy Finder Algorithm which requires local dependencies to be built.
             -- Only load if `make` is available. Make sure you have the system
             -- requirements installed.
@@ -186,17 +204,6 @@ require('lazy').setup({
         end
     },
     {
-        "utilyre/barbecue.nvim",
-        name = "barbecue",
-        version = "*",
-        dependencies = {
-            "SmiteshP/nvim-navic",
-            "nvim-tree/nvim-web-devicons", -- optional dependency
-        },
-        opts = {
-        },
-    },
-    {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {
@@ -210,36 +217,8 @@ require('lazy').setup({
             "Issafalcon/neotest-dotnet"
         }
     },
-    "wellle/context.vim",
-    {
-        'romgrk/barbar.nvim',
-        dependencies = {
-            'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
-            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-            -- animation = true,
-            -- insert_at_start = true,
-            -- …etc.
-        },
-        version = '^1.0.0', -- optional: only update when a new 1.x version is released
-    },
     "jmederosalvarado/roslyn.nvim",
-    "github/copilot.vim",
-    {
-        'numToStr/Comment.nvim',
-        opts = {
-            toggler = {
-                line = '<C-_><C-_>'
-            },
-            opleader = {
-                line = '<C-_>'
-            }
-        },
-        lazy = false,
-    },
+    'huggingface/llm.nvim',
     'jakewvincent/mkdnflow.nvim',
     "soulis-1256/hoverhints.nvim",
     {
@@ -250,8 +229,16 @@ require('lazy').setup({
         after = 'nvim-treesitter',
         run = ":Neorg sync-parsers",
         dependencies = { "nvim-lua/plenary.nvim" },
-        config = function ()
+        config = function()
             require('neorg-config')
         end
-    }
+    },
+    {
+        'SteffenBlake/new-file-template.nvim',
+        config = function()
+            require('new-file-template').setup()
+        end
+    },
+    "tpope/vim-obsession",
+    'jabirali/vim-tmux-yank',
 }, {})

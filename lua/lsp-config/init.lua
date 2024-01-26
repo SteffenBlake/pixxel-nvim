@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
-local hoverHints = require('hoverhints')
+-- local hoverHints = require('hoverhints')
+local llm = require('llm')
 
 local utils = require("utils")
 
@@ -11,7 +12,7 @@ require('lsp-config.treesitter-config')
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     -- In this case, we create a function that lets us more easily define mappings specific
     -- for LSP related items. It sets the mode, buffer and description for us each time.
     local nmap = function(keys, func, desc, mode) utils.nmap(keys, func, "LSP: " .. desc, mode, bufnr) end
@@ -44,6 +45,43 @@ local on_attach = function(_, bufnr)
     end, { desc = 'Format current buffer with LSP' })
 
     nmap('<C-K><C-F>', function() vim.cmd("Format") end, '[C-K C-F] Format Document', { 'n', 'v' })
+
+    --- Guard against servers without the signatureHelper capability
+    if client.server_capabilities.signatureHelpProvider then
+
+        nmap("<c-s>", ":LspOverloadsSignature<CR>", "Show [C-S]ignatures", { 'n', 'i' })
+
+        require('lsp-overloads').setup(client, {
+            -- UI options are mostly the same as those passed to vim.lsp.util.open_floating_preview
+            ui = {
+                border = "single", -- The border to use for the signature popup window. Accepts same border values as |nvim_open_win()|.
+                height = nil,      -- Height of the signature popup window (nil allows dynamic sizing based on content of the help)
+                width = nil,       -- Width of the signature popup window (nil allows dynamic sizing based on content of the help)
+                wrap = true,       -- Wrap long lines
+                wrap_at = nil,     -- Character to wrap at for computing height when wrap enabled
+                max_width = nil,   -- Maximum signature popup width
+                max_height = nil,  -- Maximum signature popup height
+                -- Events that will close the signature popup window: use {"CursorMoved", "CursorMovedI", "InsertCharPre"} to hide the window when typing
+                close_events = { "CursorMoved", "BufHidden", "InsertLeave" },
+                focusable = true,                       -- Make the popup float focusable
+                focus = false,                          -- If focusable is also true, and this is set to true, navigating through overloads will focus into the popup window (probably not what you want)
+                offset_x = 0,                           -- Horizontal offset of the floating window relative to the cursor position
+                offset_y = 0,                           -- Vertical offset of the floating window relative to the cursor position
+                floating_window_above_cur_line = false, -- Attempt to float the popup above the cursor position
+                -- (note, if the height of the float would be greater than the space left above the cursor, it will default
+                -- to placing the float below the cursor. The max_height option allows for finer tuning of this)
+                silent = true -- Prevents noisy notifications (make false to help debug why signature isn't working)
+            },
+            keymaps = {
+                next_signature = "<C-j>",
+                previous_signature = "<C-k>",
+                next_parameter = "<C-l>",
+                previous_parameter = "<C-h>",
+                close_signature = "<A-s>"
+            },
+            display_automatically = true -- Uses trigger characters to automatically display the signature overloads when typing a method signature
+        })
+    end
 end
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -92,11 +130,18 @@ mason_lspconfig.setup_handlers {
     end,
 }
 
-lspconfig.tsserver.setup {}
+lspconfig.tsserver.setup {
+    on_attach = on_attach,
+}
 
 lspconfig.html.setup {
-    filetypes = { "html", "hbs", "handlebars" }
+    filetypes = { "html", "hbs", "handlebars" },
+    on_attach = on_attach,
 }
+
+lspconfig.jsonls.setup{}
+
+lspconfig.dartls.setup{}
 
 -- lspconfig.omnisharp.setup {
 --     cmd = { "omnisharp" },
@@ -115,13 +160,27 @@ require("roslyn").setup({
     capabilities = capabilities
 })
 
-hoverHints.setup()
+-- hoverHints.setup()
+
+-- llm.setup({
+--     model = "https://localhost:5000",
+--     enable_suggestions_on_startup = false,
+--     enable_suggestions_on_files = "*.cs",
+--     tls_skip_verify_insecure = true,
+--     context_window = 4096,
+--     fim = {
+--         enabled = true,
+--         prefix = "<fim_prefix>",
+--         middle = "</fim_suffix><fim_middle>",
+--         suffix = "</fim_prefix><fim_suffix>",
+--     },
+--     tokens_to_clear = { "</fim_middle>" },
+-- })
 
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-        on_attach(nil, ev.buf)
-    end,
+   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+   callback = function(ev)
+       -- Enable completion triggered by <c-x><c-o>
+       vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+   end,
 })

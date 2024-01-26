@@ -4,13 +4,28 @@ local dapui = require("dapui")
 local nvimTreeApi = require('nvim-tree.api')
 local utils = require('utils')
 
+-- dap.defaults.fallback.external_terminal = {
+--     command = 'tmux';
+--     args = {'new-window', '-c', '"#{pane_current_path}"'};
+-- }
+
+-- dap.defaults.fallback.force_external_terminal = true
+
 dap.adapters.cs = {
     type = 'executable',
     command = 'netcoredbg',
     args = { '--interpreter=vscode' },
-    -- enrich_config = function (old_config, on_config)
-    --     projLoader.use_program_as_cwd(old_config, on_config)
-    -- end
+}
+
+dap.adapters.dart = {
+  type = 'executable',
+  command = 'flutter',
+  args = {'debug_adapter'}
+}
+dap.adapters.flutter = {
+  type = 'executable',
+  command = 'flutter',
+  args = {'debug_adapter'}
 }
 
 dapui.setup()
@@ -26,6 +41,13 @@ dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
     nvimTreeApi.tree.open()
 end
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    pattern = "\\[dap-repl\\]",
+    callback = vim.schedule_wrap(function(args)
+      vim.api.nvim_set_current_win(vim.fn.bufwinid(args.buf))
+    end)
+})
 
 require("nvim-dap-virtual-text").setup()
 

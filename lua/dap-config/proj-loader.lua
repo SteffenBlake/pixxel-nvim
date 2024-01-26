@@ -33,7 +33,9 @@ end
 local rootMappings = {
     csproj = "*.csproj",
     cs = "*.csproj",
-    js = "project.json"
+    js = "project.json",
+    dart = "pubspec.yaml",
+    flutter = "pubspec.yaml"
 }
 
 function GetRootGlob()
@@ -62,7 +64,7 @@ function SelectProjRoot(callback)
                 local projs = vim.fn.split(projsRaw, "\n")
                 vim.ui.select(projs,
                     {
-                        prompt = "Multiple .csproj files detected, please select one\n"
+                        prompt = "Multiple root globs detected, please select one\n"
                     },
                     function(selected) OnProjRootSelect(selected, callback) end
                 )

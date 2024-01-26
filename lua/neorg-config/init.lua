@@ -29,7 +29,7 @@ require('neorg').setup {
             config = {
                 workspaces = {
                     notes = "~/Documents/notes",
-                    journal = "~/Documents/journal"
+                    journal = "~/Documents"
                 },
                 default_workspace = 'notes',
                 index = "index.norg"
