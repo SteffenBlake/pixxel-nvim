@@ -185,16 +185,16 @@ Requires, by default, the installation of [ollama](https://github.com/ollama/oll
 
 By default I have the configuration expecting ollama to have [stable-code-3b](https://huggingface.co/stabilityai/stable-code-3b) installed, which is one of the faster and better performing "in the middle" trained llms I have tested so far. Its fast and light enough it can run off CPU and still have decent response speed, especially if you keep the max tokens config low, as well as the max context low.
 
-Step 0 (optional): If you dont have them already and want to use your gpu, ensure you have your cuda drivers installed (varies by OS and GPU a lot so you'll have to do some googling to figure this one out)
-Step 1: install Cargo: https://doc.rust-lang.org/cargo/getting-started/installation.html
-Step 2: `cargo install --branch main --git https://github.com/huggingface/llm-ls llm-ls`
-Step 3: install [ollama](https://github.com/ollama/ollama)
-Step 4: download the stable-code-3b .guff file [here](https://huggingface.co/stabilityai/stable-code-3b/tree/main) (I recommend the basic stable-code-3b.gguf file, its the largest but still wicked fast and has best accuracy/quality)
-Step 5: in the same directory as the .guff file you just downloaded, create `stable-code-3b.modelfile` with the following contents: `FROM /LLM/stable-code-3b.gguf`
-Step 6: `ollama create create stable-code-3b -f ./stable-code-3b.modelfile`
-Step 7: `ollama serve` (this might error saying the port is already in use, thats fine it means ollama is just already running)
-Step 8: if you open up a fresh instance of neovim, the autocomplete should start showing up while in edit mode!
-Step 9: feel free to configure `llm-config.lua` as needed if you want to lower/increase memory usage.
+**Step 0 (optional):** If you dont have them already and want to use your gpu, ensure you have your cuda drivers installed (varies by OS and GPU a lot so you'll have to do some googling to figure this one out)  
+**Step 1:** install Cargo: https://doc.rust-lang.org/cargo/getting-started/installation.html  
+**Step 2:** Install llm-ls: `cargo install --branch main --git https://github.com/huggingface/llm-ls llm-ls`  
+**Step 3:** install [ollama](https://github.com/ollama/ollama)  
+**Step 4:** download the stable-code-3b .guff file [here](https://huggingface.co/stabilityai/stable-code-3b/tree/main) (I recommend the basic stable-code-3b.gguf file, its the largest but still wicked fast and has best accuracy/quality)  
+**Step 5:** in the same directory as the .guff file you just downloaded, create `stable-code-3b.modelfile` with the following contents: `FROM <absolute path to your .gguf file you just downloaded>`  
+**Step 6:** `ollama create stable-code-3b -f ./stable-code-3b.modelfile`  
+**Step 7:** `ollama serve` (this might error saying the port is already in use, thats fine it means ollama is just already running)  
+**Step 8:** if you open up a fresh instance of neovim, the autocomplete should start showing up while in edit mode!  
+**Step 9:** feel free to configure `llm-config.lua` as needed if you want to lower/increase memory usage.  
 
 # Examples
 ### Editting
