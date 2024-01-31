@@ -1,6 +1,4 @@
 local lspconfig = require('lspconfig')
--- local hoverHints = require('hoverhints')
-local llm = require('llm')
 
 local utils = require("utils")
 
@@ -9,6 +7,8 @@ vim.cmd('autocmd BufRead,BufNewFile *.hbs set filetype=html')
 require('lsp-config.cmp-config')
 require('lsp-config.comment-config')
 require('lsp-config.treesitter-config')
+
+require('lsp-config.llm-config').init()
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -48,7 +48,6 @@ local on_attach = function(client, bufnr)
 
     --- Guard against servers without the signatureHelper capability
     if client.server_capabilities.signatureHelpProvider then
-
         nmap("<c-s>", ":LspOverloadsSignature<CR>", "Show [C-S]ignatures", { 'n', 'i' })
 
         require('lsp-overloads').setup(client, {
@@ -139,48 +138,22 @@ lspconfig.html.setup {
     on_attach = on_attach,
 }
 
-lspconfig.jsonls.setup{}
+lspconfig.jsonls.setup {}
 
-lspconfig.dartls.setup{}
-
--- lspconfig.omnisharp.setup {
---     cmd = { "omnisharp" },
---     enable_roslyn_analyzers = true,
---     -- analyze_open_documents_only = true,
---     organize_imports_on_format = true,
---     enable_import_completion = true,
--- }
-
--- lspconfig.csharp_ls.setup{}
+lspconfig.dartls.setup {}
 
 require("roslyn").setup({
     dotnet_cmd = "dotnet",              -- this is the default
     roslyn_version = "4.8.0-3.23475.7", -- this is the default
+-- hoverHints.setup()
     on_attach = on_attach,
     capabilities = capabilities
 })
 
--- hoverHints.setup()
-
--- llm.setup({
---     model = "https://localhost:5000",
---     enable_suggestions_on_startup = false,
---     enable_suggestions_on_files = "*.cs",
---     tls_skip_verify_insecure = true,
---     context_window = 4096,
---     fim = {
---         enabled = true,
---         prefix = "<fim_prefix>",
---         middle = "</fim_suffix><fim_middle>",
---         suffix = "</fim_prefix><fim_suffix>",
---     },
---     tokens_to_clear = { "</fim_middle>" },
--- })
-
 vim.api.nvim_create_autocmd('LspAttach', {
-   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-   callback = function(ev)
-       -- Enable completion triggered by <c-x><c-o>
-       vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-   end,
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    end,
 })

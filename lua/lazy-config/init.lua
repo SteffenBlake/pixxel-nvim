@@ -15,7 +15,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure plugins ]]
-require('lazy').setup({
+local setup =
+{
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "mfussenegger/nvim-dap", "theHamsta/nvim-dap-virtual-text" }
@@ -38,6 +39,7 @@ require('lazy').setup({
         },
         version = '^1.0.0', -- optional: only update when a new 1.x version is released
     },
+
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
     {
@@ -218,7 +220,7 @@ require('lazy').setup({
         }
     },
     "jmederosalvarado/roslyn.nvim",
-    'huggingface/llm.nvim',
+    'gnanakeethan/llm.nvim', --TODO: Switch to OG huggingface version when PR is merged in
     'jakewvincent/mkdnflow.nvim',
     "soulis-1256/hoverhints.nvim",
     {
@@ -238,7 +240,12 @@ require('lazy').setup({
         config = function()
             require('new-file-template').setup()
         end
-    },
-    "tpope/vim-obsession",
-    'jabirali/vim-tmux-yank',
-}, {})
+    }
+}
+
+if (os.getenv("TMUX") ~= nil) then
+    table.insert(setup, "tpope/vim-obsession")
+    table.insert(setup, "jabirali/vim-tmux-yank")
+end
+
+require('lazy').setup(setup)
