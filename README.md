@@ -154,10 +154,10 @@ WIP, TODO
 ## [lsp-overloads](https://github.com/Issafalcon/lsp-overloads.nvim)
 Extremely handy plugin for toggling visibility of the signature of methods, as well as browsing the method's overloads
 #### keybinds
-`ctrl-s` - Force show overloads popup, for the method currently selected in the buffer
-`alt-s` - Hide the overloads popup
-`ctrl-h/l` - browse the paramaters and their definitions of the current signature
-`ctrl-j/k` - browse the list of overloads
+`ctrl-s` - Force show overloads popup, for the method currently selected in the buffer  
+`alt-s` - Hide the overloads popup  
+`ctrl-h/l` - browse the paramaters and their definitions of the current signature  
+`ctrl-j/k` - browse the list of overloads  
 
 ## [Neorg](https://github.com/nvim-neorg/neorg)
 Pretty powerful and handy note taking, journal, calender, to-do list, etc AIO for neovim. Lets you designate predifined "workspace" folders your notes/journals etc get saved in.
