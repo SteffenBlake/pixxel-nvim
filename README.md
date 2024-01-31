@@ -93,7 +93,7 @@ Currently using the following LSPs:
 `shift+K` - Documentation  
 `Ctrl+K Ctrl+F` - Format/Lint Document  
 
-## [Comment.nvim](https://github.com/numToStr/Comment.nvim)
+## [nvim-comment](https://github.com/terrortylor/nvim-comment)
 Toggling code comments on/off
 
 `Ctrl + /` - Comments out a selected block of lines, if you have a block selected  
