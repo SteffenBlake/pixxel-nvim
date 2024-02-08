@@ -142,6 +142,13 @@ lspconfig.jsonls.setup {}
 
 lspconfig.dartls.setup {}
 
+require'lspconfig'.clangd.setup{
+    cmd = {
+        "clangd",
+        "--query-driver=/usr/bin/arm-none-eabi-g++"
+    }
+}
+
 require("roslyn").setup({
     dotnet_cmd = "dotnet",              -- this is the default
     roslyn_version = "4.8.0-3.23475.7", -- this is the default

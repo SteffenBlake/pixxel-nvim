@@ -36,6 +36,11 @@ After nvim finishes installing packages, you will need to execute `:CSInstallRos
 ### tsserver LSP
 `npm install -g typescript typescript-language-server`
 
+### Pi Pico C++ LSP
+https://clangd.llvm.org/installation
+
+Clangd is configured to utilize the pi pico g++ installer. I could probably add configuration to switch which query engine to use but pretty much the only time I use C++ nowadays is for compiling to arm SBCs so...
+
 # How to install this configuration (Windows)
 nvim folder location should be `%LocalAppData%/nvim`, checkout the git repo to that location with that name.
 If done correctly the file `%LocalAppData%/nvim/README.md` should exist.
