@@ -20,6 +20,10 @@ https://chocolatey.org/
 choco install mingw
 choco install llvm
 ```
+### Telescope grep: ripgrep
+#### ripgrep
+https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
+
 ### netcoredbg
 https://github.com/Samsung/netcoredbg/releases
 Same as omnisharp, once downloaded and installed, must be added to PATH
@@ -41,13 +45,21 @@ https://clangd.llvm.org/installation
 
 Clangd is configured to utilize the pi pico g++ installer. I could probably add configuration to switch which query engine to use but pretty much the only time I use C++ nowadays is for compiling to arm SBCs so...
 
-# How to install this configuration (Windows)
+# How to install this configuration
+## Windows
 nvim folder location should be `%LocalAppData%/nvim`, checkout the git repo to that location with that name.
 If done correctly the file `%LocalAppData%/nvim/README.md` should exist.
 
+## Linux
+nvim folder location should be `~/.config/nvim`, checkout the git repo to that location with that name.
+If done correctly the file `~/.config/nvim/README.md` should exist.
+
+
 # Supports Build and Run for dotnet projects
 
-First you must have a launch.json configured in your project root. proj-loader will automatically detect the path `.vs/launch.json` in the root of your project, and it assumes the project root based off the presence of a greedy depth first search of a .csproj file.
+First you must have a launch.json configured in your project root. proj-loader will automatically detect the path `.vs/launch.json` in the root of your project, and it assumes the project root based off the presence of a greedy depth first search of a .sln file.
+
+Configuration is also setup to have pid-attach work for a running instance of a dotnet app via dap-pid-picker, but it will make your life a lot easier if the below is done:
 
 Example `launch.json` file:
 ```
@@ -59,16 +71,16 @@ Example `launch.json` file:
             "name": "netcoredbg",
             "request": "launch",
             "program": "Your.Project.Name.dll",
-            "cwd": "${workspaceFolder}/bin/Debug/net8.0/"
+            "cwd": "${workspaceFolder}/Your.Project.Name/bin/Debug/net8.0/"
         }
     ]
 
 }
 ```
 
-proj-loader is configured by to use the found project root (where your .csproj file is) as its relative cwd for the launch.json, so you very likely willl always want your `cwd` entry to be similiar to the one above.
+proj-loader is configured to use the found project root (where your .sln file is) as its relative cwd for the launch.json, so you very likely wwill always want your `cwd` entry to be similiar to the one above.
 
-- [ ] TODO: Add support for changing build configs with proj-loader via a User Command
+Note that nvim-dap supports multiple matching configs for the same build out of the box, and if multiple matches are found it will just prompt you with which one you want to use, allowing you to define multiple build configs in your `launch.json` file
 
 # List of major plugins included in this setup and a quick blurb about them, and relevant keybinds for them
 ## [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
@@ -85,7 +97,7 @@ All other keybinds are largely the same
 Autocomplete/code suggestions/etc
 
 Currently using the following LSPs:
-* Dotnet: Omnisharp
+* Dotnet: Roslyn
 * html: vscode-langservers-extracted
 * TS/JS/Node/NPM/Json: typescript-language-server
 * Lua: lua_ls
@@ -98,6 +110,9 @@ Currently using the following LSPs:
 `shift+K` - Documentation  
 `Ctrl+K Ctrl+F` - Format/Lint Document  
 
+## [lualine](https://github.com/nvim-lualine/lualine.nvim)
+Adds a nice status line at the bottom of the editor with tonnes of meta info like git, line ending type, character format, filetype, line number and char pos, etc etc.
+
 ## [nvim-comment](https://github.com/terrortylor/nvim-comment)
 Toggling code comments on/off
 
@@ -107,10 +122,13 @@ Toggling code comments on/off
 ## [gitsigns](https://github.com/lewis6991/gitsigns.nvim)
 Git integration for multiple other plugins, primarily used to show del/add/modify status of files, folders, individual lines of code, etc
 
-## [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) + [barbecue](https://github.com/utilyre/barbecue.nvim)
+## [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) 
 VSCode style File browser on lefthand side + tabs on the top. nvim-tree supports a bunch of commands for adding/removing/changing files and directories
 
 - [ ] TODO: Figure out how to fix the fact that barbecue breaks if you open a directory directly with nvim initially, despite the fact that nvim-tree works fine in this scenario
+
+## [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+Navigation tool for quickly "remembering" the last place you were in a buffer when you change buffers, providing a "history" style functionality to quickly hop back to the last place you were in the prior buffer. Has "hot" memory for quick swapping between 4 buffers
 
 ## [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar)
 Pretty but minimalist scrollbar on buffers. Has both `lsp-config` integration to show potential code warnings/errors/suggestions, as well as git integration to show status of individual lines
