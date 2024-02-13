@@ -16,6 +16,14 @@ dap.adapters.cs = {
     command = 'netcoredbg',
     args = { '--interpreter=vscode' },
 }
+dap.configurations.cs = {
+  {
+    type = "cs",
+    name = "attach - netcoredbg",
+    request = "attach",
+    processId = require('dap.utils').pick_process,
+  },
+}
 
 dap.adapters.dart = {
   type = 'executable',
@@ -49,8 +57,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
     end)
 })
 
-require("nvim-dap-virtual-text").setup()
-
 local projLoaderOpts = {
     builders = {},
     setCwd = true
@@ -67,5 +73,3 @@ projLoader.setup(projLoaderOpts)
 vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
 utils.nmap('<F9>', dap.toggle_breakpoint, '[<F9>] Toggle Breakpoint')
 utils.nmap('<F5>', projLoader.build_and_run, '[<F5>] Debug')
-
-require('dap-config.neotest-config')

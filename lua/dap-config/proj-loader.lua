@@ -31,9 +31,11 @@ function OnProjRootSelect(selectedProj, callback)
 end
 
 local rootMappings = {
-    csproj = "*.csproj",
-    cs = "*.csproj",
+    csproj = "*.sln",
+    cs = "*.sln",
+    sln = "*.sln",
     js = "project.json",
+    ts = "project.json",
     dart = "pubspec.yaml",
     flutter = "pubspec.yaml"
 }

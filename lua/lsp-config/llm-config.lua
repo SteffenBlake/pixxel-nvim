@@ -1,10 +1,11 @@
-local llm = require('llm')
-local curl = require('plenary.curl')
 local M = {}
 
 local llmDomain = "http://localhost:11434"
 
-function M.init()
+function M.setup()
+    local llm = require('llm')
+    local curl = require('plenary.curl')
+
     local response = curl.request({
         url = llmDomain,
         method = "get",

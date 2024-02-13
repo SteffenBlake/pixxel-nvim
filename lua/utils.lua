@@ -1,6 +1,5 @@
 local utils = {}
 
-
 function utils.nmap(keys, func, desc, mode, bfr)
     mode = mode or 'n'
     local opts = {desc = desc}

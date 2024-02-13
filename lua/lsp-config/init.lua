@@ -4,11 +4,11 @@ local utils = require("utils")
 
 vim.cmd('autocmd BufRead,BufNewFile *.hbs set filetype=html')
 
-require('lsp-config.cmp-config')
+require('lsp-config.autopairs-config').setup()
 require('lsp-config.comment-config').setup()
-require('lsp-config.treesitter-config')
-
-require('lsp-config.llm-config').init()
+require('lsp-config.cmp-config').setup()
+require('lsp-config.llm-config').setup()
+require('lsp-config.treesitter-config').setup()
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.

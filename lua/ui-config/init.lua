@@ -23,6 +23,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*',
 })
 
-require('ui-config.nvim-tree-config')
-require('ui-config.scrollbar-config')
-require('ui-config.telescope-config')
+require('ui-config.color-scheme-config').setup()
+require('ui-config.hoverhints-config').setup()
+require('ui-config.lualine-config').setup()
+require('ui-config.new-file-template-config').setup()
+require('ui-config.nvim-tree-config').setup()
+require('ui-config.scrollbar-config').setup()

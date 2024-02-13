@@ -13,54 +13,39 @@ if not vim.loop.fs_stat(lazypath) then
     }
 end
 vim.opt.rtp:prepend(lazypath)
-
 -- [[ Configure plugins ]]
 local setup =
 {
+
+    -- NOTE: dap-config
     {
         "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap", "theHamsta/nvim-dap-virtual-text" }
-    },
-    -- Git related plugins
-    'tpope/vim-fugitive',
-    'tpope/vim-rhubarb',
-    {
-        'romgrk/barbar.nvim',
         dependencies = {
-            'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
-            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-            -- animation = true,
-            -- insert_at_start = true,
-            -- …etc.
-        },
-        version = '^1.0.0', -- optional: only update when a new 1.x version is released
+            "mfussenegger/nvim-dap",
+            "theHamsta/nvim-dap-virtual-text"
+        }
     },
 
-    -- NOTE: This is where your plugins related to LSP can be installed.
-    --  The configuration is done below. Search for lspconfig to find it below.
+    -- NOTE : git-Config
+    'tpope/vim-fugitive',
+    -- Adds git related signs to the gutter, as well as utilities for managing changes
+    'lewis6991/gitsigns.nvim',
+
+    -- NOTE : lsp-Config
     {
-        -- LSP Configuration & Plugins
         'neovim/nvim-lspconfig',
         dependencies = {
             -- Automatically install LSPs to stdpath for neovim
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
-
-            -- Useful status updates for LSP
-            -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-            { 'j-hui/fidget.nvim', opts = {} },
-
-            -- Additional lua configuration, makes nvim stuff amazing!
+            'j-hui/fidget.nvim',
             'folke/neodev.nvim',
         },
     },
+    -- LSP: Roslyn (Dotnet)
+    "jmederosalvarado/roslyn.nvim",
     -- Adds cycling for overloads in signature popups for LSP
     'Issafalcon/lsp-overloads.nvim',
-
     {
         'weilbith/nvim-code-action-menu',
         cmd = 'CodeActionMenu'
@@ -81,85 +66,81 @@ local setup =
             'onsails/lspkind.nvim',
         },
     },
-
-    -- Useful plugin to show you pending keybinds.
-    { 'folke/which-key.nvim', opts = {} },
     {
-        -- Adds git related signs to the gutter, as well as utilities for managing changes
-        'lewis6991/gitsigns.nvim',
-        opts = {
-            -- See `:help gitsigns.txt`
-            signs = {
-                add = { text = '+' },
-                change = { text = '~' },
-                delete = { text = '_' },
-                topdelete = { text = '‾' },
-                changedelete = { text = '~' },
-            },
-            on_attach = function(bufnr)
-                vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk,
-                    { buffer = bufnr, desc = 'Preview git hunk' })
-
-                -- don't override the built-in and fugitive keymaps
-                local gs = package.loaded.gitsigns
-                vim.keymap.set({ 'n', 'v' }, ']c', function()
-                    if vim.wo.diff then
-                        return ']c'
-                    end
-                    vim.schedule(function()
-                        gs.next_hunk()
-                    end)
-                    return '<Ignore>'
-                end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-                vim.keymap.set({ 'n', 'v' }, '[c', function()
-                    if vim.wo.diff then
-                        return '[c'
-                    end
-                    vim.schedule(function()
-                        gs.prev_hunk()
-                    end)
-                    return '<Ignore>'
-                end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
-            end,
+        -- Highlight, edit, and navigate code
+        'nvim-treesitter/nvim-treesitter',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
         },
+        build = ':TSUpdate',
+    },
+    -- Comment/uncomment commands
+    'terrortylor/nvim-comment',
+    -- Self hosted LLM code completion
+    'gnanakeethan/llm.nvim', --TODO: Switch to OG huggingface version when PR is merged in
+    -- Hoverhints with mouse
+    "soulis-1256/eagle.nvim",
+    -- Auto-append closing brace/bracket/parenth/etc
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
     },
 
+    -- NOTE : nav-config
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    },
+
+    -- NOTE : neorg-config
+    {
+        "nvim-neorg/neorg",
+        ft = 'norg',
+        cmd = 'Neorg',
+        priority = 30,
+        after = 'nvim-treesitter',
+        run = ":Neorg sync-parsers",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require('neorg-config')
+        end
+    },
+
+    -- NOTE : test-config
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+            "Issafalcon/neotest-dotnet"
+        }
+    },
+
+    -- NOTE : ui-config
+
+    -- color-scheme (ui-config.color-scheme-config)
     {
         -- Theme inspired by Atom
         'navarasu/onedark.nvim',
         priority = 1000,
-        config = function()
-            vim.cmd.colorscheme 'onedark'
-        end,
     },
-
+    -- Useful plugin to show you pending keybinds.
+    'folke/which-key.nvim',
+    -- The nice status line you can see at the bottom of neovim ↓ ↓ ↓
+    'nvim-lualine/lualine.nvim',
+    -- Shows indent lines even on blank lines
     {
-        -- Set lualine as statusline
-        'nvim-lualine/lualine.nvim',
-        -- See `:help lualine.txt`
-        opts = {
-            options = {
-                icons_enabled = false,
-                theme = 'onedark',
-                component_separators = '|',
-                section_separators = '',
-            },
-        },
-    },
-
-    {
-        -- Add indentation guides even on blank lines
         'lukas-reineke/indent-blankline.nvim',
-        -- Enable `lukas-reineke/indent-blankline.nvim`
-        -- See `:help ibl`
         main = 'ibl',
-        opts = {},
     },
-
-    -- Fuzzy Finder (files, lsp, etc)
+    -- Fuzzy Finder (files, lsp, git, grepping, etc)
+    -- Also replaces default nvim picker with a fancy modal that supports search
     {
         'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-ui-select.nvim',
@@ -177,26 +158,15 @@ local setup =
             },
         },
     },
-
-    {
-        -- Highlight, edit, and navigate code
-        'nvim-treesitter/nvim-treesitter',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-        },
-        build = ':TSUpdate',
-    },
+    -- <-- Fancy filetree over there
     {
         "nvim-tree/nvim-tree.lua",
-        version = "*",
         lazy = false,
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
-        config = function()
-            require("nvim-tree").setup {}
-        end,
     },
+    -- Scrollbar
     "petertriho/nvim-scrollbar",
     {
         "lewis6991/gitsigns.nvim",
@@ -205,45 +175,17 @@ local setup =
             require("scrollbar.handlers.gitsigns").setup()
         end
     },
-    'terrortylor/nvim-comment',
+    -- Highlights on TODO/NOTE/HACK/PERF/FIX comments
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-        }
+        opts = {}
     },
-    {
-        "nvim-neotest/neotest",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "antoinemadec/FixCursorHold.nvim",
-            "Issafalcon/neotest-dotnet"
-        }
-    },
-    "jmederosalvarado/roslyn.nvim",
-    'gnanakeethan/llm.nvim', --TODO: Switch to OG huggingface version when PR is merged in
-    'jakewvincent/mkdnflow.nvim',
-    "soulis-1256/hoverhints.nvim",
-    {
-        "nvim-neorg/neorg",
-        ft = 'norg',
-        cmd = 'Neorg',
-        priority = 30,
-        after = 'nvim-treesitter',
-        run = ":Neorg sync-parsers",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require('neorg-config')
-        end
-    },
-    {
-        'SteffenBlake/new-file-template.nvim',
-        config = function()
-            require('new-file-template').setup()
-        end
-    }
+    -- New File Templates with selectors
+    'SteffenBlake/new-file-template.nvim',
 }
 
+-- NOTE : TMUX support
 if (os.getenv("TMUX") ~= nil) then
     table.insert(setup, "tpope/vim-obsession")
     table.insert(setup, "jabirali/vim-tmux-yank")
