@@ -1,1 +1,1 @@
-require('test-config.neotest-config')
+require('test-config.neotest-config').setup()

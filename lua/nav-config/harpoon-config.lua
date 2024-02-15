@@ -4,7 +4,7 @@ function M.setup()
     require('harpoon'):setup({})
 end
 
-function M.toggle_telescope()
+function M.harpoon_picker()
     local harpoon_files = require('harpoon'):list()
     local conf = require("telescope.config").values
     local file_paths = {}

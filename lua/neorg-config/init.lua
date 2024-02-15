@@ -7,7 +7,7 @@ require('neorg').setup {
         ["core.keybinds"] = {
             config = {
                 hook = function(keybinds)
-                    keybinds.remap_key("norg", "n", "<C-Space>", "<Leader>t")
+                    keybinds.remap_key("norg", "n", "<C-Space>", "<Leader>nt")
                 end
             }
         },

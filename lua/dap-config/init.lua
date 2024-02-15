@@ -2,7 +2,6 @@ local projLoader = require('dap-config.proj-loader')
 local dap = require('dap')
 local dapui = require("dapui")
 local nvimTreeApi = require('nvim-tree.api')
-local utils = require('utils')
 
 -- dap.defaults.fallback.external_terminal = {
 --     command = 'tmux';
@@ -71,5 +70,3 @@ projLoaderOpts.builders["*.csproj"] =
 projLoader.setup(projLoaderOpts)
 
 vim.fn.sign_define('DapBreakpoint', {text='🔴', texthl='', linehl='', numhl=''})
-utils.nmap('<F9>', dap.toggle_breakpoint, '[<F9>] Toggle Breakpoint')
-utils.nmap('<F5>', projLoader.build_and_run, '[<F5>] Debug')
