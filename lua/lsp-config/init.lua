@@ -61,7 +61,7 @@ local on_attach = function(client, bufnr)
             },
             display_automatically = true -- Uses trigger characters to automatically display the signature overloads when typing a method signature
         })
-    --end
+    end
 end
 
 -- mason-lspconfig requires that these setup functions are called in this order
