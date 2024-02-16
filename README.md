@@ -103,13 +103,6 @@ Currently using the following LSPs:
 * Lua: lua_ls
 - [ ] TODO: Figure out the best LSP for CSS/SASS/SCSS  
 
-`F12` - Usages  
-`Ctrl+F12` - Implementations  
-`gd` - Jump to definition  
-`Alt+Enter` - Code Actions/Suggestions  
-`shift+K` - Documentation  
-`Ctrl+K Ctrl+F` - Format/Lint Document  
-
 ## [lualine](https://github.com/nvim-lualine/lualine.nvim)
 Adds a nice status line at the bottom of the editor with tonnes of meta info like git, line ending type, character format, filetype, line number and char pos, etc etc.
 
@@ -125,8 +118,6 @@ Git integration for multiple other plugins, primarily used to show del/add/modif
 ## [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) 
 VSCode style File browser on lefthand side + tabs on the top. nvim-tree supports a bunch of commands for adding/removing/changing files and directories
 
-- [ ] TODO: Figure out how to fix the fact that barbecue breaks if you open a directory directly with nvim initially, despite the fact that nvim-tree works fine in this scenario
-
 ## [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 Navigation tool for quickly "remembering" the last place you were in a buffer when you change buffers, providing a "history" style functionality to quickly hop back to the last place you were in the prior buffer. Has "hot" memory for quick swapping between 4 buffers
 
@@ -140,18 +131,6 @@ Mandatory treesitter as every vim config has. Code highlighting / coloring / etc
 
 ## [nvim-telescope](https://github.com/nvim-telescope/telescope.nvim)
 Another mandatory plugin everyone uses. Searching, Grepping, but also a handy tool for pickers and floating selectors and whatnot, many other plugins depend on this
-
-'?' - Find recently opened files  
-'/' - Fuzzy search current buffer  
-`  `(space space) - List buffers  
-`gf` - search git files  
-`sf` - search files  
-`sh` - search help  
-`sw` - search current word (handy for finding chars in giant strings)  
-`sg` - grep  
-`sG` - grep entire workspace  
-`sd` - search diagnostics  
-`sr` - Resume search  
 
 ## [telescope-ui-select](https://github.com/nvim-telescope/telescope-ui-select.nvim)
 Replaces vim's default select picker with above aformentioned telescope's much fancier and prettier picker, which includes filtering options by text input
@@ -218,6 +197,117 @@ By default I have the configuration expecting ollama to have [stable-code-3b](ht
 **Step 7:** `ollama serve` (this might error saying the port is already in use, thats fine it means ollama is just already running)  
 **Step 8:** if you open up a fresh instance of neovim, the autocomplete should start showing up while in edit mode!  
 **Step 9:** feel free to configure `llm-config.lua` as needed if you want to lower/increase memory usage.  
+
+# Keybinds
+
+Keybinds are setup (aside from the handful that need to work in insert mode) to follow three steps to their chords.
+1. `<leader>`, which is by default set to be Spacebar
+2. Category key, which is a key for each category of commands.
+3. Command key, which is the final key for the actual command itself.
+
+For example, for the command "Format" below, the chord would be: 
+* `<Spacebar>rf` for Leader -> [R]efactor -> [F]ormat
+
+## [C]onsole
+### (Normal Mode) [E]xecute current line
+### (Visual Mode) [E]xecute current selection
+For both of the above, requires tmux to be installed and neovim to be running inside a tmux session.
+
+Will open up a new tmux panel (if one hasnt been opened yet) and pipe the current line (normal mode) or selected text (visual mode) into the tmux panel, executing it.
+
+## [D]ebug
+This section deals with all keybinds for interacting with the debugger
+### Toggle [B]reakpoint
+Toggles a breakpoint being set on the given line for nvim-dap debugger
+
+### [C]lear Breakpoints
+Clears all stored breakpoints in the current session for nvim-dap debugger
+
+### [L]ist Breakpoints
+Opens up a Telescope Picker for all existing breakpoints
+
+### Build and [R]un
+Starts nvim-dap, running the debugger for given configurations
+
+## [F]iles
+This section deals with all navigation to change files/buffers
+### Search Current [B]uffers
+Opens a Telescope Picker for all currently opened buffers
+
+### Search [C]hanged Files
+Opens a Telescope file picker, pulled from git history to list all modified files both from uncommitted changes, stashed changes, and unpushed changes
+
+### Search [G]it Files
+Opens a Telescope file picker for all files except for those ignored by .gitignore
+
+### Search File [H]istory
+Opens a Telescope file picker based on recently opened files in all neovim sessions
+
+### Search files by g[r]ep
+Opens a Grep fuzzy finder, that will find files with text that matches the grep fuzzy find.
+
+## [G]it
+This section deals with all registered hotkeys to help with git functionality
+
+### [B]ranches
+Opens a Telescope picker to switch Git branches
+
+## [H]arpoon
+Keybinds related to Harpoon
+
+### [H]arpoon!
+Tags the given line as a Harpoon'd mark
+
+### j/k
+Navigate back/forward Harpoon marks
+
+### a/e/i/o/u (respectively)
+Jump to Harpoon marks 1 through 5
+
+## [R]efactor
+All keybinds related to modifying the buffer
+
+### [A]ction Menu
+Opens up the LSP's Action Menu at the given cursor
+
+### [F]ormat
+Formats the buffer's code
+
+### [R]ename
+Opens a prompt to rename the selected symbol (most LSPs will propogate this rename across all files, mileage will vary)
+
+## [S]earch
+Handles keybinds involved in navigating based on the current buffer
+
+### [D]efinitions
+Opens a telescope picker to show all definitions of selected symbol. Will jump straight to the definition if only one exists.
+
+### [F]ind
+Opens up a fuzzy Grep for within the current buffer
+
+### [I]mplementations
+Opens up a telescope list for Implementations of the selected symbol. Will jump directly to the result if only one exists.
+
+### [R]eferences
+Opens up a telescope picker for all references of the selected symbol
+
+### [S]ymbols
+Opens up a telescope picker showing for declared symbols in the current buffer
+
+### Diagnostic [W]arnings
+Opens up a telescope picker for all diagnostic warnings of the current buffer
+
+## [T]ests
+Category for all keybinds regarding tests
+
+## [D]ebug the nearest test
+Triggers a debug session with nvim-dap of the nearest declared test to the cursor
+
+## Test the nearest [F]ile
+Runs the full test suite for the opened file
+
+## Run the [N]earest test
+Runs the nearest declared test to the cursor
 
 # Examples
 ### Editting

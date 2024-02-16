@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require('ui-config.color-scheme-config').setup()
 require('ui-config.hoverhints-config').setup()
+require('ui-config.keys-nvim-config').setup()
 require('ui-config.lualine-config').setup()
 require('ui-config.new-file-template-config').setup()
 require('ui-config.nvim-tree-config').setup()

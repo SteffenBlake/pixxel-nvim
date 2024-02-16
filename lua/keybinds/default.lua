@@ -19,14 +19,18 @@ function M.setup_core()
 
     vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+    local tmux_sender = require('console-config.tmux-sender')
     local tele_builtin = require('telescope.builtin')
     local harpoon = require('harpoon')
     local dap = require('dap')
     local projLoader = require('dap-config.proj-loader')
     local neotest = require('neotest')
 
-    local opts = { prefix = "<leader>" }
-    local mappings = {
+    local normalMode = {
+        c = {
+            name = "[C]onsole",
+            e = { tmux_sender.send_lines, "[E]xecute current line" }
+        },
         f = {
             name = "[F]iles",
             g = { tele_builtin.git_files, "Search [G]it files" },
@@ -60,7 +64,7 @@ function M.setup_core()
             name = "[R]efactor",
             a = { "<cmd>CodeActionMenu<cr>", "[A]ction menu" },
             r = { vim.lsp.buf.rename, "[R]ename" },
-            f = { "<cmd>Format<cr>", ":[F]ormat"}
+            f = { "<cmd>Format<cr>", ":[F]ormat" }
         },
         g = {
             name = "[G]it",
@@ -77,12 +81,26 @@ function M.setup_core()
         t = {
             name = "[T]ests",
             n = { neotest.run.run, "Run the [N]earest test" },
-            d = { function() neotest.run.run({strategy = "dap"}) end, "[D]ebug the nearest test" },
+            d = { function() neotest.run.run({ strategy = "dap" }) end, "[D]ebug the nearest test" },
             f = { function() neotest.run.run(vim.fn.expand("%")) end, "Test the entire [F]ile" }
         }
     }
 
-    require('which-key').register(mappings, opts)
+    local visualMode = {
+        c = {
+            name = "[C]onsole",
+            e = { tmux_sender.send_selected, "[E]xecute selection" }
+        },
+    }
+
+    require('which-key').register(normalMode, {
+        prefix = "<leader>",
+        mode = "n"
+    })
+    require('which-key').register(visualMode, {
+        prefix = "<leader>",
+        mode = "v"
+    })
 end
 
 return M

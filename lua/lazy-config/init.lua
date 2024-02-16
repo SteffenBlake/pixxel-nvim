@@ -16,6 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure plugins ]]
 local setup =
 {
+    -- NOTE: console-config
 
     -- NOTE: dap-config
     {
@@ -127,6 +128,12 @@ local setup =
         'navarasu/onedark.nvim',
         priority = 1000,
     },
+    {
+        'tamton-aquib/keys.nvim',
+        --cmd = "KeysToggle"
+    },
+    -- Highlights usages of selected symbols
+    'RRethy/vim-illuminate',
     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     -- The nice status line you can see at the bottom of neovim ↓ ↓ ↓
