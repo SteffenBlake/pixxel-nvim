@@ -20,6 +20,7 @@ function M.setup_core()
     vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
     local tmux_sender = require('console-config.tmux-sender')
+    local telescope = require('telescope')
     local tele_builtin = require('telescope.builtin')
     local harpoon = require('harpoon')
     local dap = require('dap')
@@ -64,7 +65,8 @@ function M.setup_core()
             name = "[R]efactor",
             a = { "<cmd>CodeActionMenu<cr>", "[A]ction menu" },
             r = { vim.lsp.buf.rename, "[R]ename" },
-            f = { "<cmd>Format<cr>", ":[F]ormat" }
+            f = { "<cmd>Format<cr>", ":[F]ormat" },
+            u = { telescope.extensions.undo.undo, "[U]ndo History" }
         },
         g = {
             name = "[G]it",

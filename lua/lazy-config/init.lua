@@ -95,6 +95,8 @@ local setup =
             "nvim-telescope/telescope.nvim"
         }
     },
+    -- Better line wrapping and nav between soft linewraps
+    "preservim/vim-pencil",
 
     -- NOTE : neorg-config
     {
@@ -149,6 +151,7 @@ local setup =
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
+            'debugloop/telescope-undo.nvim',
             'nvim-telescope/telescope-ui-select.nvim',
             -- Fuzzy Finder Algorithm which requires local dependencies to be built.
             -- Only load if `make` is available. Make sure you have the system

@@ -6,10 +6,19 @@ function M.setup()
     vim.defer_fn(function()
         treeSitterConfigs.setup {
             -- Add languages to be installed here that you want installed for treesitter
-            ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+            ensure_installed = {
+                'c', 'cpp', 'go',
+                'lua',
+                'python',
+                'rust', 'tsx',
+                'javascript', 'typescript',
+                'vimdoc', 'vim',
+                'bash',
+                'markdown_inline'
+            },
 
             -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-            auto_install = false,
+            auto_install = true,
 
             highlight = { enable = true },
             indent = { enable = true },
@@ -67,6 +76,12 @@ function M.setup()
                 },
             },
         }
+
+        -- Tweaks to make markdown play nice
+        vim.api.nvim_set_hl(0, 'mkdBold', { bold = true })
+        vim.api.nvim_set_hl(0, 'mkdItalic', { italic = true })
+        vim.api.nvim_set_hl(0, 'markdownBold', { bold = true })
+        vim.api.nvim_set_hl(0, '@markup.italic.markdown_inline', { italic = true })
     end, 0)
 end
 

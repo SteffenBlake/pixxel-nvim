@@ -33,6 +33,9 @@ function M.setup()
                 require("telescope.themes").get_dropdown {
                     -- even more opts
                 }
+            },
+            undo = {
+
             }
         }
     }
@@ -41,6 +44,7 @@ function M.setup()
     pcall(telescope.load_extension, 'fzf')
 
     telescope.load_extension("ui-select")
+    telescope.load_extension("undo")
 end
 
 return M

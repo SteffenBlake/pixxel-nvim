@@ -10,6 +10,8 @@ vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a T
 vim.o.softtabstop = 4  -- Number of spaces inserted instead of a TAB character
 vim.o.shiftwidth = 4   -- Number of spaces inserted when indenting
 
+vim.o.conceallevel=3
+
 require('lazy-config')
 
 require('console-config')
@@ -34,6 +36,11 @@ vim.wo.number = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
+vim.o.mousemodel = 'popup'
+
+-- Enable Spellcheck
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.

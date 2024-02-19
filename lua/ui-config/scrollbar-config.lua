@@ -1,6 +1,9 @@
 local M = {}
 
 function M.setup()
+    -- Handles the scrollbar hiding the last char of a line
+    --vim.opt.virtualedit = "onemore"
+    
     require("scrollbar").setup({
         handle = {
             text = "┃",

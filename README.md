@@ -276,6 +276,13 @@ Formats the buffer's code
 ### [R]ename
 Opens a prompt to rename the selected symbol (most LSPs will propogate this rename across all files, mileage will vary)
 
+### [U]ndo History
+Brings up a Telescope picker for all Undo history, including with a diff display for the changes! Uses the following default keybinds:
+
+* `<CR>` - Yanks the specific discrete `++` changes into default register
+* `<S-CR>` - Yanks the specific discrete `--` changes into default register
+* `<C-CR>` - Reverts the buffer back to the selected point in History
+
 ## [S]earch
 Handles keybinds involved in navigating based on the current buffer
 
@@ -300,13 +307,13 @@ Opens up a telescope picker for all diagnostic warnings of the current buffer
 ## [T]ests
 Category for all keybinds regarding tests
 
-## [D]ebug the nearest test
+### [D]ebug the nearest test
 Triggers a debug session with nvim-dap of the nearest declared test to the cursor
 
-## Test the nearest [F]ile
+### Test the nearest [F]ile
 Runs the full test suite for the opened file
 
-## Run the [N]earest test
+### Run the [N]earest test
 Runs the nearest declared test to the cursor
 
 # Examples
