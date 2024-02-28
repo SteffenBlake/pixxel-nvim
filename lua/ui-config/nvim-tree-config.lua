@@ -52,6 +52,13 @@ function M.setup()
             end
         end
     })
+
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+        pattern = "*.*",
+        callback = function()
+            nvimTreeApi.tree.find_file({ focus = false, open = false })
+        end
+    })
 end
 
 return M

@@ -24,6 +24,7 @@ function M.setup_core()
     local tele_builtin = require('telescope.builtin')
     local harpoon = require('harpoon')
     local dap = require('dap')
+    local dapui = require('dapui')
     local projLoader = require('dap-config.proj-loader')
     local neotest = require('neotest')
 
@@ -38,7 +39,8 @@ function M.setup_core()
             h = { tele_builtin.oldfiles, "Search file [H]istory" },
             r = { tele_builtin.live_grep, "Search files by g[r]ep" },
             b = { tele_builtin.buffers, "Search current [B]uffers" },
-            c = { require('git-config.git-dirty-picker').git_dirty_picker, "Search [C]hanged files" }
+            c = { require('git-config.git-dirty-picker').git_dirty_picker, "Search [C]hanged files" },
+            t = { require('nvim-tree.api').tree.toggle, "[T]oggle file tree" }
         },
         h = {
             name = "[H]arpoon",
@@ -78,7 +80,8 @@ function M.setup_core()
             r = { projLoader.build_and_run, "Build and [R]un" },
             b = { dap.toggle_breakpoint, "Toggle [B]reakpoint" },
             l = { dap.list_breakpoints, "[L]ist Breakpoints" },
-            c = { dap.clear_breakpoints, "[C]lear breakpoints" }
+            c = { dap.clear_breakpoints, "[C]lear breakpoints" },
+            t = { dapui.toggle, "[T]oggle DAP UI" }
         },
         t = {
             name = "[T]ests",
