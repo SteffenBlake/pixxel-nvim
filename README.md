@@ -138,6 +138,9 @@ Replaces vim's default select picker with above aformentioned telescope's much f
 ## [new-file-template](https://github.com/SteffenBlake/new-file-template.nvim) (custom fork)
 Templating for new files created if they match specific filename matches. Custom fork of the original plugin that switches the API to a callback system to support pickers/inputs with callback patterns
 
+## git-conflict
+Handy tool for detecting git conflict `>...` + `..<` in files. Disables code suggestions until git conflicts are resolved, and enables a handful of handy commands for resolving conflicts and navigating them.
+
 #### cs
 Prompts for templates for the following currently supported types:
 * class
@@ -249,8 +252,29 @@ Opens a Grep fuzzy finder, that will find files with text that matches the grep 
 ## [G]it
 This section deals with all registered hotkeys to help with git functionality
 
-### [B]ranches
+### [S]witch branches
 Opens a Telescope picker to switch Git branches
+
+### (Conflict) [H] - Prev conflict
+Jumps to the previous detected merge conflict in the buffer
+
+### (Conflict) [L] - Next conflict
+Jumps to the next detected merge conflict in the buffer
+
+### (Conflict) List [C]onflicts
+Opens up a list of navigable detected merge conflicts in the buffer
+
+### (Conflict) Choose [N]one
+Chooses neither of the options for a merge conflict
+
+### (Conflict) Choose [Y]ours
+Chooses Your (Local/Current) changes in the merge conflict (Option A)
+
+### (Conflict) Choose [T]heirs
+Chooses Their (Remote/Incoming) changes in the merge conflict (Option B)
+
+### (Conflict) choose [B]oth
+Chooses both Local + Remote changes in the merge conflict (Options A+B)
 
 ## [H]arpoon
 Keybinds related to Harpoon

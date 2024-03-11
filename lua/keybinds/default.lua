@@ -19,6 +19,7 @@ function M.setup_core()
 
     vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+    local git_conflict = require('git-conflict')
     local tmux_sender = require('console-config.tmux-sender')
     local telescope = require('telescope')
     local tele_builtin = require('telescope.builtin')
@@ -31,16 +32,16 @@ function M.setup_core()
     local normalMode = {
         c = {
             name = "[C]onsole",
-            e = { tmux_sender.send_lines, "[E]xecute current line" }
+            e = { tmux_sender.send_lines, "[e]xecute current line" }
         },
         f = {
             name = "[F]iles",
-            g = { tele_builtin.git_files, "Search [G]it files" },
-            h = { tele_builtin.oldfiles, "Search file [H]istory" },
+            g = { tele_builtin.git_files, "Search [g]it files" },
+            h = { tele_builtin.oldfiles, "Search file [h]istory" },
             r = { tele_builtin.live_grep, "Search files by g[r]ep" },
-            b = { tele_builtin.buffers, "Search current [B]uffers" },
-            c = { require('git-config.git-dirty-picker').git_dirty_picker, "Search [C]hanged files" },
-            t = { require('nvim-tree.api').tree.toggle, "[T]oggle file tree" }
+            b = { tele_builtin.buffers, "Search current [b]uffers" },
+            c = { require('git-config.git-dirty-picker').git_dirty_picker, "Search [c]hanged files" },
+            t = { require('nvim-tree.api').tree.toggle, "[t]oggle file tree" }
         },
         h = {
             name = "[H]arpoon",
@@ -49,52 +50,58 @@ function M.setup_core()
             i = { function() harpoon:list():select(3) end, "Jump to harpoon 3" },
             o = { function() harpoon:list():select(4) end, "Jump to harpoon 4" },
             u = { function() harpoon:list():select(5) end, "Jump to harpoon 5" },
-            h = { function() harpoon:list():append() end, "[H]arpoon! " },
+            h = { function() harpoon:list():append() end, "[h]arpoon! " },
             j = { function() harpoon:list():prev() end, "Prev" },
             k = { function() harpoon:list():next() end, "Next" },
-            l = { require('nav-config.harpoon-config').harpoon_picker, "[L]ist harpoons" }
+            l = { require('nav-config.harpoon-config').harpoon_picker, "[l]ist harpoons" }
         },
         s = {
             name = "[S]earch",
-            r = { tele_builtin.lsp_references, "[R]eferences" },
-            d = { tele_builtin.lsp_definitions, "[D]efinitions" },
-            i = { tele_builtin.lsp_implementations, "[I]mplementations" },
-            s = { tele_builtin.lsp_document_symbols, "[S]ymbols" },
-            f = { tele_builtin.current_buffer_fuzzy_find, "[F]ind" },
-            w = { tele_builtin.diagnostics, "Diagnostic [W]arnings" }
+            r = { tele_builtin.lsp_references, "[r]eferences" },
+            d = { tele_builtin.lsp_definitions, "[d]efinitions" },
+            i = { tele_builtin.lsp_implementations, "[i]mplementations" },
+            s = { tele_builtin.lsp_document_symbols, "[s]ymbols" },
+            f = { tele_builtin.current_buffer_fuzzy_find, "[f]ind" },
+            w = { tele_builtin.diagnostics, "Diagnostic [w]arnings" }
         },
         r = {
             name = "[R]efactor",
-            a = { "<cmd>CodeActionMenu<cr>", "[A]ction menu" },
-            r = { vim.lsp.buf.rename, "[R]ename" },
-            f = { "<cmd>Format<cr>", ":[F]ormat" },
+            a = { "<cmd>CodeActionMenu<cr>", "[a]ction menu" },
+            r = { vim.lsp.buf.rename, "[r]ename" },
+            f = { "<cmd>Format<cr>", ":[f]ormat" },
             u = { telescope.extensions.undo.undo, "[U]ndo History" }
         },
         g = {
             name = "[G]it",
-            b = { tele_builtin.git_branches, "[B]ranches" },
-
+            s = { tele_builtin.git_branches, "[s]witch branches" },
+            c = { "<cmd>GitConflictListQf<cr>", "List [c]onflicts" },
+            n = { "<cmd>GitConflictChooseNone<cr>", "(Conflict) Choose [n]one" },
+            y = { "<cmd>GitConflictChooseOurs<cr>", "(Conflict) Choose [y]ours" },
+            t = { "<cmd>GitConflictChooseTheirs<cr>", "(Conflict) Choose [t]heirs" },
+            b = { "<cmd>GitConflictChooseBoth<cr>", "(Conflict) Choose [b]oth" },
+            h = { "<cmd>GitConflictPrevConflict<cr>", "(Conflict) Prev conflict" },
+            l = { "<cmd>GitConflictNextConflict<cr>", "(Conflict) Next Conflict" },
         },
         d = {
             name = "[D]ebug",
-            r = { projLoader.build_and_run, "Build and [R]un" },
-            b = { dap.toggle_breakpoint, "Toggle [B]reakpoint" },
-            l = { dap.list_breakpoints, "[L]ist Breakpoints" },
-            c = { dap.clear_breakpoints, "[C]lear breakpoints" },
-            t = { dapui.toggle, "[T]oggle DAP UI" }
+            r = { projLoader.build_and_run, "Build and [r]un" },
+            b = { dap.toggle_breakpoint, "Toggle [b]reakpoint" },
+            l = { dap.list_breakpoints, "[l]ist Breakpoints" },
+            c = { dap.clear_breakpoints, "[c]lear breakpoints" },
+            t = { dapui.toggle, "[t]oggle DAP UI" }
         },
         t = {
             name = "[T]ests",
-            n = { neotest.run.run, "Run the [N]earest test" },
-            d = { function() neotest.run.run({ strategy = "dap" }) end, "[D]ebug the nearest test" },
-            f = { function() neotest.run.run(vim.fn.expand("%")) end, "Test the entire [F]ile" }
+            n = { neotest.run.run, "Run the [n]earest test" },
+            d = { function() neotest.run.run({ strategy = "dap" }) end, "[d]ebug the nearest test" },
+            f = { function() neotest.run.run(vim.fn.expand("%")) end, "Test the entire [f]ile" }
         }
     }
 
     local visualMode = {
         c = {
             name = "[C]onsole",
-            e = { tmux_sender.send_selected, "[E]xecute selection" }
+            e = { tmux_sender.send_selected, "[e]xecute selection" }
         },
     }
 
