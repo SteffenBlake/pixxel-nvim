@@ -340,13 +340,7 @@ Runs the full test suite for the opened file
 ### Run the [N]earest test
 Runs the nearest declared test to the cursor
 
-### [L]oad a test coverage report
-Prompts you to input the path to a coverage report, which will then be watched for changes and displays coverage report in the left gutter as green/red for covered vs not
-
-### [C]lear the test coverage report
-Unloads and stops watching the currently loaded test coverage report file
-
-### [S]ummary of loaded test coverage report
+### [S]ummarize test coverage
 Shows a popup browseable test report coverage summary, based on a loaded in Test Coverage Report (loaded in via the above command)
 
 # Examples
