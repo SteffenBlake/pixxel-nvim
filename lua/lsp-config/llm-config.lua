@@ -21,9 +21,13 @@ function M.setup()
         cargoPath = os.getenv('HOME') .. "/.cargo/bin/llm-ls"
     end
     llm.setup({
-        lsp = { bin_path =  cargoPath },
-        model = llmDomain .. "/api/generate",
-        enable_suggestions_on_startup = true,
+        lsp = {
+            bin_path = cargoPath
+        },
+        model = "codellama",
+        url = llmDomain .. "/api/generate",
+        backend = "ollama",
+        enable_suggestions_on_startup = false,
         enable_suggestions_on_files = "*",
         tls_skip_verify_insecure = true,
         context_window = 4096,
@@ -34,15 +38,14 @@ function M.setup()
             suffix = "<fim_suffix>",
         },
         tokens_to_clear = { "</fim_middle>" },
-        adaptor = "ollama",
         request_body = {
-            model = "stable-code-3b"
-        },
-        query_params = {
-            maxNewTokens = 256,
-            temperature = 0.5,
-            doSample = true,
-            topP = 0.90,
+            options = {
+                num_predict = 256,
+                temperature =  0.5,
+                top_p = 0.14,
+                top_k = 49,
+                mirostat = 1,
+            }
         }
     })
 end

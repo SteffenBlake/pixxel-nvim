@@ -28,6 +28,7 @@ function M.setup_core()
     local dapui = require('dapui')
     local projLoader = require('dap-config.proj-loader')
     local neotest = require('neotest')
+    local coverage = require('test-config.coverage-helper')
 
     local normalMode = {
         c = {
@@ -93,8 +94,17 @@ function M.setup_core()
         t = {
             name = "[T]ests",
             n = { neotest.run.run, "Run the [n]earest test" },
-            d = { function() neotest.run.run({ strategy = "dap" }) end, "[d]ebug the nearest test" },
-            f = { function() neotest.run.run(vim.fn.expand("%")) end, "Test the entire [f]ile" }
+            d = { 
+                function() neotest.run.run({ strategy = "dap" }) end, 
+                "[d]ebug the nearest test" 
+            },
+            f = { 
+                function() neotest.run.run(vim.fn.expand("%")) end, 
+                "Test the entire [f]ile" 
+            },
+            l = { coverage.load_report, "[L]oad a test coverage report" },
+            c = { coverage.clear, "[C]lear the test coverage report" },
+            s = { coverage.summary, "[S]ummary of loaded test coverage report" }
         }
     }
 

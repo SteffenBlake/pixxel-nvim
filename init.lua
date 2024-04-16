@@ -12,6 +12,8 @@ vim.o.shiftwidth = 4   -- Number of spaces inserted when indenting
 
 vim.o.conceallevel=3
 
+vim.o.ve = 'block'
+
 require('lazy-config')
 
 require('console-config')

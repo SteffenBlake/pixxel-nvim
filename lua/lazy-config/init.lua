@@ -23,7 +23,8 @@ local setup =
         "rcarriga/nvim-dap-ui",
         dependencies = {
             "mfussenegger/nvim-dap",
-            "theHamsta/nvim-dap-virtual-text"
+            "theHamsta/nvim-dap-virtual-text",
+            "nvim-neotest/nvim-nio"
         }
     },
 
@@ -78,7 +79,7 @@ local setup =
     -- Comment/uncomment commands
     'terrortylor/nvim-comment',
     -- Self hosted LLM code completion
-    'gnanakeethan/llm.nvim', --TODO: Switch to OG huggingface version when PR is merged in
+    'huggingface/llm.nvim',
     -- Hoverhints with mouse
     "soulis-1256/eagle.nvim",
     -- Auto-append closing brace/bracket/parenth/etc
@@ -122,7 +123,12 @@ local setup =
             "Issafalcon/neotest-dotnet"
         }
     },
-
+    {
+        "andythigpen/nvim-coverage",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        }
+    },
     -- NOTE : ui-config
 
     -- color-scheme (ui-config.color-scheme-config)

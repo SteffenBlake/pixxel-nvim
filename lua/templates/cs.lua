@@ -14,7 +14,8 @@ using System.Linq;
 
 namespace ]] .. namespace .. [[;
 
-public ]] .. obj_type .. ' ' .. objName .. [[ {
+public ]] .. obj_type .. ' ' .. objName .. [[ 
+{
     |cursor|
 }]])
 

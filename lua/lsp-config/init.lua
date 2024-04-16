@@ -2,12 +2,10 @@ local lspconfig = require('lspconfig')
 
 local utils = require("utils")
 
-vim.cmd('autocmd BufRead,BufNewFile *.hbs set filetype=html')
-
 require('lsp-config.autopairs-config').setup()
 require('lsp-config.comment-config').setup()
 require('lsp-config.cmp-config').setup()
---require('lsp-config.llm-config').setup()
+-- require('lsp-config.llm-config').setup()
 require('lsp-config.treesitter-config').setup()
 
 -- [[ Configure LSP ]]
