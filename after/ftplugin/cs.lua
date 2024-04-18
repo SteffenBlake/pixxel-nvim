@@ -1,6 +1,6 @@
 local coverageFile = vim.fn.getcwd() .. "/.coverage/lcov.info"
 
-if (not vim.fn.filereadable(coverageFile)) then
+if (vim.fn.filereadable(coverageFile) == 0) then
     return
 end
 
