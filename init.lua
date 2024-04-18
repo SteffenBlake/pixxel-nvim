@@ -14,6 +14,8 @@ vim.o.conceallevel=3
 
 vim.o.ve = 'block'
 
+vim.o.wrap = false;
+
 require('lazy-config')
 
 require('console-config')
