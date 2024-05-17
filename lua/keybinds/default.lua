@@ -111,6 +111,12 @@ function M.setup_core()
             name = "[C]onsole",
             e = { tmux_sender.send_selected, "[e]xecute selection" }
         },
+        r = {
+            name = "[R]efactor",
+            a = { "<cmd>CodeActionMenu<cr>", "[a]ction menu" },
+            f = { "<cmd>Format<cr>", ":[f]ormat" },
+            u = { telescope.extensions.undo.undo, "[U]ndo History" }
+        },
     }
 
     require('which-key').register(normalMode, {

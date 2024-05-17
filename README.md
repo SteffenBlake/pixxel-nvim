@@ -29,10 +29,49 @@ https://github.com/Samsung/netcoredbg/releases
 Same as omnisharp, once downloaded and installed, must be added to PATH
 Can validate it works via executing `netcoredbg --version` in your terminal
 
-### Roslyn LSP
-https://github.com/jmederosalvarado/roslyn.nvim
+### Omnisharp LSP
+Install latest Omnisharp LSP here: https://github.com/OmniSharp/omnisharp-roslyn/releases/latest
 
-After nvim finishes installing packages, you will need to execute `:CSInstallRoslyn`, at which point the package will download the latest Roslyn package and automatically install it
+Install it at `~/.local/lib/omnisharp/OmniSharp.dll`
+
+#### .editorconfig
+Here is my recommended .editorconfig file to go in `~`
+```
+root = true
+
+[*.{cs,vb}]
+csharp_style_namespace_declarations = file_scoped
+csharp_style_var_for_built_in_types = true
+csharp_style_var_when_type_is_apparent = true
+csharp_style_var_elsewhere = true
+dotnet_style_prefer_conditional_expression_over_return = false
+```
+
+#### Omnisharp rpc.lua fix
+If opening .cs files triggers this error:
+`attempt to index local 'decoded' (a nil value)`
+Then perform this fix:
+https://github.com/OmniSharp/omnisharp-roslyn/issues/2574#issuecomment-2045096730
+
+(Note the path to rpc.lua may differ from that comment, use the same path your specific error is giving)
+
+#### Omnisharp omnisharp.json fix for picking up framework
+By default omnisharp binds to dotnet 6.x, you can fix this via creating `~/.omnisharp/omnisharp.json` with the following:
+```
+{
+    "sdk": {
+        "path": "/usr/share/dotnet/sdk/8.0.203",
+        "version": "8.0.203"
+    },
+    "RenameOptions": {
+        "RenameInComments": true,
+        "RenameOverloads": true,
+        "RenameInStrings": true
+    }
+}
+
+```
+The path and version should match the directory that `which dotnet` leads you to (specifically the `./sdk/#.#.###` folder underneath it)
 
 ### html LSP
 `npm i -g vscode-langservers-extracted`
@@ -44,6 +83,17 @@ After nvim finishes installing packages, you will need to execute `:CSInstallRos
 https://clangd.llvm.org/installation
 
 Clangd is configured to utilize the pi pico g++ installer. I could probably add configuration to switch which query engine to use but pretty much the only time I use C++ nowadays is for compiling to arm SBCs so...
+
+### XML LSP (lemminx vscode)
+Download the latest binary from here: https://github.com/redhat-developer/vscode-xml/releases/latest
+Ensure it is on PATH, and has been named `lemminx`
+
+### Avalonia axaml LSP
+1. Checkout Avalonia.Ide here https://github.com/kekekeks/Avalonia.Ide to `~/.local/lib/Avalonia.Ide`
+2. Replace the pngcs submodule with this one: https://github.com/leonbloy/pngcs
+3. Checkout and update all submodules
+4. Build `./src/Avalonia.Ide.LanguageServer` via `dotnet publish -c Release`
+5. If all went well, the output should be `~/.local/lib/Avalonia.Ide/src/Avalonia.Ide.LanguageServer/bin/Release/netcoreapp2.1/Avalonia.Ide.LanguageServer.dll`
 
 # How to install this configuration
 ## Windows

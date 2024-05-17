@@ -44,8 +44,6 @@ local setup =
             'folke/neodev.nvim',
         },
     },
-    -- LSP: Roslyn (Dotnet)
-    "jmederosalvarado/roslyn.nvim",
     -- Adds cycling for overloads in signature popups for LSP
     'Issafalcon/lsp-overloads.nvim',
     {
@@ -97,8 +95,7 @@ local setup =
             "nvim-telescope/telescope.nvim"
         }
     },
-    -- Better line wrapping and nav between soft linewraps
-    "preservim/vim-pencil",
+    "wsdjeg/vim-fetch",
 
     -- NOTE : neorg-config
     {
@@ -108,11 +105,16 @@ local setup =
         priority = 30,
         after = 'nvim-treesitter',
         run = ":Neorg sync-parsers",
+        tag = "v7.0.0",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             require('neorg-config')
         end
     },
+    -- NOTE : prose-config
+    -- Better line wrapping and nav between soft linewraps
+    "preservim/vim-pencil",
+    "dbmrq/vim-ditto",
 
     -- NOTE : test-config
     {

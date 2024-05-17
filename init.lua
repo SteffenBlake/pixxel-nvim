@@ -20,6 +20,7 @@ require('lazy-config')
 
 require('console-config')
 require('dap-config')
+require('filetypes-config')
 require('git-config')
 require('lsp-config')
 require('nav-config')
