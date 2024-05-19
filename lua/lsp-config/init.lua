@@ -132,14 +132,16 @@ require'lspconfig'.lemminx.setup {
                 }
             }
         }
-    }
+    },
+    on_attach = on_attach,
 }
 
 require'lspconfig'.clangd.setup {
     cmd = {
         "clangd",
         "--query-driver=/usr/bin/arm-none-eabi-g++"
-    }
+    },
+    on_attach = on_attach,
 }
 
 require'lspconfig'.omnisharp.setup {
@@ -183,6 +185,7 @@ require'lspconfig'.omnisharp.setup {
         IncludePrereleases = false,
       },
     },
+    on_attach = on_attach,
 }
 
 vim.api.nvim_create_autocmd('LspAttach', {
