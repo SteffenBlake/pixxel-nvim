@@ -4,6 +4,7 @@ local utils = require("utils")
 
 require('lsp-config.autopairs-config').setup()
 require('lsp-config.comment-config').setup()
+require('lsp-config.fzf-lua-config')
 require('lsp-config.cmp-config').setup()
 -- require('lsp-config.llm-config').setup()
 require('lsp-config.treesitter-config').setup()

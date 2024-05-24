@@ -46,9 +46,10 @@ local setup =
     },
     -- Adds cycling for overloads in signature popups for LSP
     'Issafalcon/lsp-overloads.nvim',
+    -- mostly we use fzf in telescope mode for code actions
     {
-        'weilbith/nvim-code-action-menu',
-        cmd = 'CodeActionMenu'
+        "ibhagwan/fzf-lua",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
         -- Autocompletion

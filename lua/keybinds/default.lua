@@ -29,6 +29,7 @@ function M.setup_core()
     local projLoader = require('dap-config.proj-loader')
     local neotest = require('neotest')
     local coverage = require('coverage')
+    local fzf = require('fzf-lua')
 
     local normalMode = {
         c = {
@@ -67,7 +68,7 @@ function M.setup_core()
         },
         r = {
             name = "[R]efactor",
-            a = { "<cmd>CodeActionMenu<cr>", "[a]ction menu" },
+            a = { fzf.lsp_code_actions, "[a]ction menu" },
             r = { vim.lsp.buf.rename, "[r]ename" },
             f = { "<cmd>Format<cr>", ":[f]ormat" },
             u = { telescope.extensions.undo.undo, "[U]ndo History" }
@@ -113,7 +114,7 @@ function M.setup_core()
         },
         r = {
             name = "[R]efactor",
-            a = { "<cmd>CodeActionMenu<cr>", "[a]ction menu" },
+            a = { fzf.lsp_code_actions, "[a]ction menu" },
             f = { "<cmd>Format<cr>", ":[f]ormat" },
             u = { telescope.extensions.undo.undo, "[U]ndo History" }
         },
