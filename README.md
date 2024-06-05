@@ -29,6 +29,8 @@ https://github.com/Samsung/netcoredbg/releases
 Same as omnisharp, once downloaded and installed, must be added to PATH
 Can validate it works via executing `netcoredbg --version` in your terminal
 
+Also, and very importantly, I have a configuration setup to remote debug with netcoredbg **over ssh targeting windows**, for more info see below
+
 ### Omnisharp LSP
 Install latest Omnisharp LSP here: https://github.com/OmniSharp/omnisharp-roslyn/releases/latest
 
@@ -131,6 +133,8 @@ Example `launch.json` file:
 proj-loader is configured to use the found project root (where your .sln file is) as its relative cwd for the launch.json, so you very likely wwill always want your `cwd` entry to be similiar to the one above.
 
 Note that nvim-dap supports multiple matching configs for the same build out of the box, and if multiple matches are found it will just prompt you with which one you want to use, allowing you to define multiple build configs in your `launch.json` file
+
+# Remote debugging over SSH targeting a Windows OpenSSH Server
 
 # List of major plugins included in this setup and a quick blurb about them, and relevant keybinds for them
 ## [nvim-dap](https://github.com/mfussenegger/nvim-dap) + [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
