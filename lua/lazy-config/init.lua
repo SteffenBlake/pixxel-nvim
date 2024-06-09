@@ -44,6 +44,8 @@ local setup =
             'folke/neodev.nvim',
         },
     },
+    -- Decompiler and Source Gen support for omnisharp
+    'Hoffs/omnisharp-extended-lsp.nvim',
     -- Adds cycling for overloads in signature popups for LSP
     'Issafalcon/lsp-overloads.nvim',
     -- mostly we use fzf in telescope mode for code actions

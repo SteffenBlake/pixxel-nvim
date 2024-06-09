@@ -1,2 +1,2 @@
 
-vim.opt.filetype = "xml"
+vim.opt.filetype = "csproj"
