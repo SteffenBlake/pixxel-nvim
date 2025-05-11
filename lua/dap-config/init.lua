@@ -17,14 +17,16 @@ dap.adapters.cs = function(callback, config)
             command = 'netcoredbg',
             args = { '--interpreter=vscode' },
         })
+        return
     end
 
-    if (not config.ssh) then
+    if (not(config.ssh)) then
         callback({
             type = 'executable',
             command = 'netcoredbg',
             args = { '--interpreter=vscode' },
         })
+        return
     end
 
     -- Compose SSH info
