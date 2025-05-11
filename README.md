@@ -31,10 +31,14 @@ Can validate it works via executing `netcoredbg --version` in your terminal
 
 Also, and very importantly, I have a configuration setup to remote debug with netcoredbg **over ssh targeting windows**, for more info see below
 
-### Omnisharp LSP
-Install latest Omnisharp LSP here: https://github.com/OmniSharp/omnisharp-roslyn/releases/latest
+### Roslyn LSP
+Download the latest copy of msbuild-project-tools-server here: https://github.com/tintoy/msbuild-project-tools-server/releases/latest
 
-Install it at `~/.local/lib/omnisharp/OmniSharp.dll`
+Unzip it to the following locations:
+* **Windows:** C:\Program Files\msbuild-project-tools-server\
+* **Linux:** /usr/local/lib/msbuild-project-tools-server/
+
+(Note that the file `MSBuildProjectTools.LanguageServer.Host.dll` should exist in this directory if you did it right, IE the file `/usr/local/lib/msbuild-project-tools-server/MSBuildProjectTools.LanguageServer.Host.dll` should exist now)
 
 #### .editorconfig
 Here is my recommended .editorconfig file to go in `~`
@@ -49,31 +53,13 @@ csharp_style_var_elsewhere = true
 dotnet_style_prefer_conditional_expression_over_return = false
 ```
 
-#### Omnisharp rpc.lua fix
+#### rpc.lua fix (Might not be relevant for Roslyn)
 If opening .cs files triggers this error:
 `attempt to index local 'decoded' (a nil value)`
 Then perform this fix:
 https://github.com/OmniSharp/omnisharp-roslyn/issues/2574#issuecomment-2045096730
 
 (Note the path to rpc.lua may differ from that comment, use the same path your specific error is giving)
-
-#### Omnisharp omnisharp.json fix for picking up framework
-By default omnisharp binds to dotnet 6.x, you can fix this via creating `~/.omnisharp/omnisharp.json` with the following:
-```
-{
-    "sdk": {
-        "path": "/usr/share/dotnet/sdk/8.0.203",
-        "version": "8.0.203"
-    },
-    "RenameOptions": {
-        "RenameInComments": true,
-        "RenameOverloads": true,
-        "RenameInStrings": true
-    }
-}
-
-```
-The path and version should match the directory that `which dotnet` leads you to (specifically the `./sdk/#.#.###` folder underneath it)
 
 ### html LSP
 `npm i -g vscode-langservers-extracted`

@@ -121,11 +121,21 @@ lspconfig.jsonls.setup {}
 
 lspconfig.dartls.setup {}
 
-lspconfig.msbuild_project_tools_server.setup {
-    cmd = {
+local msbuildCmd = {}
+if vim.fn.has('win32') == 1 then
+    msbuildCmd = {
         'dotnet',
         'C:\\Program Files\\msbuild-project-tools-server\\MSBuildProjectTools.LanguageServer.Host.dll'
-    },
+    }
+elseif vim.fn.has('unix') == 1 then
+    msbuildCmd = {
+        'dotnet',
+        '/usr/local/lib/msbuild-project-tools-server/MSBuildProjectTools.LanguageServer.Host.dll'
+    }
+end
+
+lspconfig.msbuild_project_tools_server.setup {
+    cmd = msbuildCmd,
     filetypes = { "csproj", "sln" },
 }
 
