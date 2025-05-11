@@ -64,7 +64,7 @@ https://github.com/OmniSharp/omnisharp-roslyn/issues/2574#issuecomment-204509673
 ### html LSP
 `npm i -g vscode-langservers-extracted`
 
-### tsserver LSP
+### ts_ls LSP (Typescript / Json)
 `npm install -g typescript typescript-language-server`
 
 ### Pi Pico C++ LSP

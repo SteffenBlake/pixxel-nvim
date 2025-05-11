@@ -65,7 +65,8 @@ end
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
 require('mason').setup()
-require('mason-lspconfig').setup()
+
+local mason_lspconfig = require('mason-lspconfig')
 
 local servers = {
     -- clangd = {},
@@ -91,35 +92,31 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup {
     ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-    function(server_name)
-        lspconfig[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-            filetypes = (servers[server_name] or {}).filetypes,
-        }
-    end,
-}
-
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
+    capabilities = capabilities,
     on_attach = on_attach,
 }
 
 lspconfig.html.setup {
+    capabilities = capabilities,
     filetypes = { "html", "hbs", "handlebars" },
     on_attach = on_attach,
 }
 
-lspconfig.jsonls.setup {}
+lspconfig.jsonls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
-lspconfig.dartls.setup {}
+lspconfig.dartls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
 
 local msbuildCmd = {}
 if vim.fn.has('win32') == 1 then
@@ -135,8 +132,10 @@ elseif vim.fn.has('unix') == 1 then
 end
 
 lspconfig.msbuild_project_tools_server.setup {
+    capabilities = capabilities,
     cmd = msbuildCmd,
     filetypes = { "csproj", "sln" },
+    on_attach = on_attach,
 }
 
 -- local xsdTemplates = os.getenv('HOME') .. "/.local/share/nvim/xsd-templates/"

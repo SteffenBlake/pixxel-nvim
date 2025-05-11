@@ -156,7 +156,13 @@ local setup =
     -- Highlights usages of selected symbols
     'RRethy/vim-illuminate',
     -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
+    {
+        'folke/which-key.nvim',
+        dependencies = {
+            "echasnovski/mini.icons",
+            "nvim-tree/nvim-web-devicons"
+        }
+    },
     -- The nice status line you can see at the bottom of neovim ↓ ↓ ↓
     'nvim-lualine/lualine.nvim',
     -- Shows indent lines even on blank lines

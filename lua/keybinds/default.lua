@@ -58,103 +58,86 @@ function M.setup_core()
         tele_builtin.lsp_implementations()
     end
 
-    local normalMode = {
-        c = {
-            name = "[C]onsole",
-            e = { tmux_sender.send_lines, "[e]xecute current line" }
-        },
-        f = {
-            name = "[F]iles",
-            g = { tele_builtin.git_files, "Search [g]it files" },
-            h = { tele_builtin.oldfiles, "Search file [h]istory" },
-            r = { tele_builtin.live_grep, "Search files by g[r]ep" },
-            b = { tele_builtin.buffers, "Search current [b]uffers" },
-            c = { require('git-config.git-dirty-picker').git_dirty_picker, "Search [c]hanged files" },
-            t = { require('nvim-tree.api').tree.toggle, "[t]oggle file tree" }
-        },
-        h = {
-            name = "[H]arpoon",
-            a = { function() harpoon:list():select(1) end, "Jump to harpoon 1" },
-            e = { function() harpoon:list():select(2) end, "Jump to harpoon 2" },
-            i = { function() harpoon:list():select(3) end, "Jump to harpoon 3" },
-            o = { function() harpoon:list():select(4) end, "Jump to harpoon 4" },
-            u = { function() harpoon:list():select(5) end, "Jump to harpoon 5" },
-            h = { function() harpoon:list():append() end, "[h]arpoon! " },
-            j = { function() harpoon:list():prev() end, "Prev" },
-            k = { function() harpoon:list():next() end, "Next" },
-            l = { require('nav-config.harpoon-config').harpoon_picker, "[l]ist harpoons" }
-        },
-        s = {
-            name = "[S]earch",
-            r = { lsp_references, "[r]eferences" },
-            d = { lsp_definitions, "[d]efinitions" },
-            i = { lsp_implementations, "[i]mplementations" },
-            s = { tele_builtin.lsp_document_symbols, "[s]ymbols" },
-            f = { tele_builtin.current_buffer_fuzzy_find, "[f]ind" },
-            w = { tele_builtin.diagnostics, "Diagnostic [w]arnings" }
-        },
-        r = {
-            name = "[R]efactor",
-            a = { fzf.lsp_code_actions, "[a]ction menu" },
-            r = { vim.lsp.buf.rename, "[r]ename" },
-            f = { "<cmd>Format<cr>", ":[f]ormat" },
-            u = { telescope.extensions.undo.undo, "[U]ndo History" }
-        },
-        g = {
-            name = "[G]it",
-            s = { tele_builtin.git_branches, "[s]witch branches" },
-            c = { "<cmd>GitConflictListQf<cr>", "List [c]onflicts" },
-            n = { "<cmd>GitConflictChooseNone<cr>", "(Conflict) Choose [n]one" },
-            y = { "<cmd>GitConflictChooseOurs<cr>", "(Conflict) Choose [y]ours" },
-            t = { "<cmd>GitConflictChooseTheirs<cr>", "(Conflict) Choose [t]heirs" },
-            b = { "<cmd>GitConflictChooseBoth<cr>", "(Conflict) Choose [b]oth" },
-            h = { "<cmd>GitConflictPrevConflict<cr>", "(Conflict) Prev conflict" },
-            l = { "<cmd>GitConflictNextConflict<cr>", "(Conflict) Next Conflict" },
-        },
-        d = {
-            name = "[D]ebug",
-            r = { projLoader.build_and_run, "Build and [r]un" },
-            b = { dap.toggle_breakpoint, "Toggle [b]reakpoint" },
-            l = { dap.list_breakpoints, "[l]ist Breakpoints" },
-            c = { dap.clear_breakpoints, "[c]lear breakpoints" },
-            t = { dapui.toggle, "[t]oggle DAP UI" }
-        },
-        t = {
-            name = "[T]ests",
-            n = { neotest.run.run, "Run the [n]earest test" },
-            d = {
-                function() neotest.run.run({ strategy = "dap" }) end,
-                "[d]ebug the nearest test"
-            },
-            f = {
-                function() neotest.run.run(vim.fn.expand("%")) end,
-                "Test the entire [f]ile"
-            },
-            s = { coverage.summary, "[S]ummarize test coverage" }
-        }
-    }
-
-    local visualMode = {
-        c = {
-            name = "[C]onsole",
-            e = { tmux_sender.send_selected, "[e]xecute selection" }
-        },
-        r = {
-            name = "[R]efactor",
-            a = { fzf.lsp_code_actions, "[a]ction menu" },
-            f = { "<cmd>Format<cr>", ":[f]ormat" },
-            u = { telescope.extensions.undo.undo, "[U]ndo History" }
-        },
-    }
-
-    require('which-key').register(normalMode, {
-        prefix = "<leader>",
-        mode = "n"
+    local wk = require("which-key")
+    
+    wk.add({
+      -- [C]onsole
+      { "<leader>ce", function() tmux_sender.send_lines() end, desc = "[e]xecute current line", mode = "n" },
+      { "<leader>ce", function() tmux_sender.send_selected() end, desc = "[e]xecute selection", mode = "v" },
+      { "<leader>c", group = "[C]onsole" },
+    
+      -- [F]iles
+      { "<leader>fg", tele_builtin.git_files, desc = "Search [g]it files" },
+      { "<leader>fh", tele_builtin.oldfiles, desc = "Search file [h]istory" },
+      { "<leader>fr", tele_builtin.live_grep, desc = "Search files by g[r]ep" },
+      { "<leader>fb", tele_builtin.buffers, desc = "Search current [b]uffers" },
+      { "<leader>fc", require('git-config.git-dirty-picker').git_dirty_picker, desc = "Search [c]hanged files" },
+      { "<leader>ft", require('nvim-tree.api').tree.toggle, desc = "[t]oggle file tree" },
+      { "<leader>f", group = "[F]iles" },
+    
+      -- [H]arpoon
+      { "<leader>ha", function() harpoon:list():select(1) end, desc = "Jump to harpoon 1" },
+      { "<leader>he", function() harpoon:list():select(2) end, desc = "Jump to harpoon 2" },
+      { "<leader>hi", function() harpoon:list():select(3) end, desc = "Jump to harpoon 3" },
+      { "<leader>ho", function() harpoon:list():select(4) end, desc = "Jump to harpoon 4" },
+      { "<leader>hu", function() harpoon:list():select(5) end, desc = "Jump to harpoon 5" },
+      { "<leader>hh", function() harpoon:list():append() end, desc = "[h]arpoon!" },
+      { "<leader>hj", function() harpoon:list():prev() end, desc = "Prev" },
+      { "<leader>hk", function() harpoon:list():next() end, desc = "Next" },
+      { "<leader>hl", require('nav-config.harpoon-config').harpoon_picker, desc = "[l]ist harpoons" },
+      { "<leader>h", group = "[H]arpoon" },
+    
+      -- [S]earch
+      { "<leader>sr", lsp_references, desc = "[r]eferences" },
+      { "<leader>sd", lsp_definitions, desc = "[d]efinitions" },
+      { "<leader>si", lsp_implementations, desc = "[i]mplementations" },
+      { "<leader>ss", tele_builtin.lsp_document_symbols, desc = "[s]ymbols" },
+      { "<leader>sf", tele_builtin.current_buffer_fuzzy_find, desc = "[f]ind" },
+      { "<leader>sw", tele_builtin.diagnostics, desc = "Diagnostic [w]arnings" },
+      { "<leader>s", group = "[S]earch" },
+    
+      -- [R]efactor
+      { "<leader>ra", fzf.lsp_code_actions, desc = "[a]ction menu", mode = { "n", "v" } },
+      { "<leader>rr", vim.lsp.buf.rename, desc = "[r]ename" },
+      { "<leader>rf", "<cmd>Format<cr>", desc = ":[f]ormat", mode = { "n", "v" } },
+      { "<leader>ru", telescope.extensions.undo.undo, desc = "[U]ndo History", mode = { "n", "v" } },
+      { "<leader>r", group = "[R]efactor" },
+    
+      -- [G]it
+      { "<leader>gs", tele_builtin.git_branches, desc = "[s]witch branches" },
+      { "<leader>gc", "<cmd>GitConflictListQf<cr>", desc = "List [c]onflicts" },
+      { "<leader>gn", "<cmd>GitConflictChooseNone<cr>", desc = "Choose [n]one" },
+      { "<leader>gy", "<cmd>GitConflictChooseOurs<cr>", desc = "Choose [y]ours" },
+      { "<leader>gt", "<cmd>GitConflictChooseTheirs<cr>", desc = "Choose [t]heirs" },
+      { "<leader>gb", "<cmd>GitConflictChooseBoth<cr>", desc = "Choose [b]oth" },
+      { "<leader>gh", "<cmd>GitConflictPrevConflict<cr>", desc = "Prev conflict" },
+      { "<leader>gl", "<cmd>GitConflictNextConflict<cr>", desc = "Next Conflict" },
+      { "<leader>g", group = "[G]it" },
+    
+      -- [D]ebug
+      { "<leader>dr", projLoader.build_and_run, desc = "Build and [r]un" },
+      { "<leader>db", dap.toggle_breakpoint, desc = "Toggle [b]reakpoint" },
+      { "<leader>dl", dap.list_breakpoints, desc = "[l]ist Breakpoints" },
+      { "<leader>dc", dap.clear_breakpoints, desc = "[c]lear breakpoints" },
+      { "<leader>dt", dapui.toggle, desc = "[t]oggle DAP UI" },
+      { "<leader>d", group = "[D]ebug" },
+    
+      -- [T]ests
+      { "<leader>tn", neotest.run.run, desc = "Run the [n]earest test" },
+      {
+        "<leader>td",
+        function() neotest.run.run({ strategy = "dap" }) end,
+        desc = "[d]ebug the nearest test"
+      },
+      {
+        "<leader>tf",
+        function() neotest.run.run(vim.fn.expand("%")) end,
+        desc = "Test the entire [f]ile"
+      },
+      { "<leader>ts", coverage.summary, desc = "[S]ummarize test coverage" },
+      { "<leader>t", group = "[T]ests" },
     })
-    require('which-key').register(visualMode, {
-        prefix = "<leader>",
-        mode = "v"
-    })
+
 end
 
 return M
