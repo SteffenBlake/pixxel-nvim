@@ -22,7 +22,7 @@ function M.setup_core()
     local tmux_sender = require('console-config.tmux-sender')
     local telescope = require('telescope')
     local tele_builtin = require('telescope.builtin')
-    local omnisharp_extended = require('omnisharp_extended')
+    -- local omnisharp_extended = require('omnisharp_extended')
     local harpoon = require('harpoon')
     local dap = require('dap')
     local dapui = require('dapui')
@@ -33,28 +33,28 @@ function M.setup_core()
 
     local lsp_references = function()
         print(vim.bo.filetype)
-        if (vim.bo.filetype == 'cs') then
-            print("Using Omnisharp extended...")
-            omnisharp_extended.telescope_lsp_references()
-        end
+        -- if (vim.bo.filetype == 'cs') then
+        --     print("Using Omnisharp extended...")
+        --     omnisharp_extended.telescope_lsp_references()
+        -- end
         tele_builtin.lsp_references()
     end
 
     local lsp_definitions = function()
         print(vim.bo.filetype)
-        if (vim.bo.filetype == 'cs') then
-            print("Using Omnisharp extended...")
-            omnisharp_extended.telescope_lsp_definition()
-        end
+        -- if (vim.bo.filetype == 'cs') then
+        --     print("Using Omnisharp extended...")
+        --     omnisharp_extended.telescope_lsp_definition()
+        -- end
         tele_builtin.lsp_definitions()
     end
 
     local lsp_implementations = function()
         print(vim.bo.filetype)
-        if (vim.bo.filetype == 'cs') then
-            print("Using Omnisharp extended...")
-            omnisharp_extended.telescope_lsp_implementation()
-        end
+        -- if (vim.bo.filetype == 'cs') then
+        --     print("Using Omnisharp extended...")
+        --     omnisharp_extended.telescope_lsp_implementation()
+        -- end
         tele_builtin.lsp_implementations()
     end
 

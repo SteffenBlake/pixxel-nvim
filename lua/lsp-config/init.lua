@@ -124,83 +124,83 @@ lspconfig.dartls.setup {}
 lspconfig.msbuild_project_tools_server.setup {
     cmd = {
         'dotnet',
-        os.getenv('HOME') ..'/.local/lib/msbuild-project-tools-server/src/LanguageServer/bin/Release/net8.0MSBuildProjectTools.LanguageServer.Host.dll'
+        'C:\\Program Files\\msbuild-project-tools-server\\MSBuildProjectTools.LanguageServer.Host.dll'
     },
     filetypes = { "csproj", "sln" },
 }
 
-local xsdTemplates = os.getenv('HOME') .. "/.local/share/nvim/xsd-templates/"
-require 'lspconfig'.lemminx.setup {
-    settings = {
-        xml = {
-            fileAssociations = {
-                {
-                    systemId = xsdTemplates .. "XamlPresentation2006.xsd",
-                    pattern = ".xaml"
-                }
-            }
-        }
-    },
-    on_attach = on_attach,
-}
+-- local xsdTemplates = os.getenv('HOME') .. "/.local/share/nvim/xsd-templates/"
+-- require 'lspconfig'.lemminx.setup {
+--     settings = {
+--         xml = {
+--             fileAssociations = {
+--                 {
+--                     systemId = xsdTemplates .. "XamlPresentation2006.xsd",
+--                     pattern = ".xaml"
+--                 }
+--             }
+--         }
+--     },
+--     on_attach = on_attach,
+-- }
 
-require 'lspconfig'.clangd.setup {
-    cmd = {
-        "clangd",
-        "--query-driver=/usr/bin/arm-none-eabi-g++"
-    },
-    on_attach = on_attach,
-}
+-- require 'lspconfig'.clangd.setup {
+--     cmd = {
+--         "clangd",
+--         "--query-driver=/usr/bin/arm-none-eabi-g++"
+--     },
+--     on_attach = on_attach,
+-- }
 
-require 'lspconfig'.omnisharp.setup {
-    cmd = { "dotnet", os.getenv('HOME') .. "/.local/lib/omnisharp/OmniSharp.dll" },
-    filetypes = { "cs", "vb" },
-    settings = {
-        FormattingOptions = {
-            -- Enables support for reading code style, naming convention and analyzer
-            -- settings from .editorconfig.
-            EnableEditorConfigSupport = true,
-            -- Specifies whether 'using' directives should be grouped and sorted during
-            -- document formatting.
-            OrganizeImports = true,
-        },
-        MsBuild = {
-            -- If true, MSBuild project system will only load projects for files that
-            -- were opened in the editor. This setting is useful for big C# codebases
-            -- and allows for faster initialization of code navigation features only
-            -- for projects that are relevant to code that is being edited. With this
-            -- setting enabled OmniSharp may load fewer projects and may thus display
-            -- incomplete reference lists for symbols.
-            LoadProjectsOnDemand = false,
-        },
-        RoslynExtensionsOptions = {
-            -- Enables support for roslyn analyzers, code fixes and rulesets.
-            EnableAnalyzersSupport = true,
-            -- Enables support for showing unimported types and unimported extension
-            -- methods in completion lists. When committed, the appropriate using
-            -- directive will be added at the top of the current file. This option can
-            -- have a negative impact on initial completion responsiveness,
-            -- particularly for the first few completion sessions after opening a
-            -- solution.
-            EnableImportCompletion = true,
-            -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
-            -- true
-            AnalyzeOpenDocumentsOnly = false,
-        },
-        Sdk = {
-            -- Specifies whether to include preview versions of the .NET SDK when
-            -- determining which version to use for project loading.
-            IncludePrereleases = false,
-        },
-    },
-    on_attach = on_attach,
-    -- handlers = {
-    --     ["textDocument/definition"] = omnisharp_extended.definition_handler,
-    --     ["textDocument/typeDefinition"] = omnisharp_extended.type_definition_handler,
-    --     ["textDocument/references"] = omnisharp_extended.references_handler,
-    --     ["textDocument/implementation"] = omnisharp_extended.implementation_handler,
-    -- }
-}
+-- require 'lspconfig'.omnisharp.setup {
+--     cmd = { "C:\\Program Files\\omnisharp\\OmniSharp.exe" },
+--     filetypes = { "cs", "vb" },
+--     settings = {
+--         FormattingOptions = {
+--             -- Enables support for reading code style, naming convention and analyzer
+--             -- settings from .editorconfig.
+--             EnableEditorConfigSupport = true,
+--             -- Specifies whether 'using' directives should be grouped and sorted during
+--             -- document formatting.
+--             OrganizeImports = true,
+--         },
+--         MsBuild = {
+--             -- If true, MSBuild project system will only load projects for files that
+--             -- were opened in the editor. This setting is useful for big C# codebases
+--             -- and allows for faster initialization of code navigation features only
+--             -- for projects that are relevant to code that is being edited. With this
+--             -- setting enabled OmniSharp may load fewer projects and may thus display
+--             -- incomplete reference lists for symbols.
+--             LoadProjectsOnDemand = false,
+--         },
+--         RoslynExtensionsOptions = {
+--             -- Enables support for roslyn analyzers, code fixes and rulesets.
+--             EnableAnalyzersSupport = true,
+--             -- Enables support for showing unimported types and unimported extension
+--             -- methods in completion lists. When committed, the appropriate using
+--             -- directive will be added at the top of the current file. This option can
+--             -- have a negative impact on initial completion responsiveness,
+--             -- particularly for the first few completion sessions after opening a
+--             -- solution.
+--             EnableImportCompletion = true,
+--             -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+--             -- true
+--             AnalyzeOpenDocumentsOnly = false,
+--         },
+--         Sdk = {
+--             -- Specifies whether to include preview versions of the .NET SDK when
+--             -- determining which version to use for project loading.
+--             IncludePrereleases = false,
+--         },
+--     },
+--     on_attach = on_attach,
+--     -- handlers = {
+--     --     ["textDocument/definition"] = omnisharp_extended.definition_handler,
+--     --     ["textDocument/typeDefinition"] = omnisharp_extended.type_definition_handler,
+--     --     ["textDocument/references"] = omnisharp_extended.references_handler,
+--     --     ["textDocument/implementation"] = omnisharp_extended.implementation_handler,
+--     -- }
+-- }
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
