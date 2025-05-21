@@ -95,9 +95,15 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 mason_lspconfig.setup {
     ensure_installed = vim.tbl_keys(servers),
+    on_attach = on_attach
 }
 
 lspconfig.ts_ls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+
+lspconfig.svelte.setup {
     capabilities = capabilities,
     on_attach = on_attach,
 }
@@ -116,6 +122,29 @@ lspconfig.jsonls.setup {
 lspconfig.dartls.setup {
     capabilities = capabilities,
     on_attach = on_attach,
+}
+
+lspconfig.ruff.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+
+lspconfig.pyright.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+            disableTaggedHints = true,
+        },
+        python = {
+            analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+            },
+        },
+    }
 }
 
 local msbuildCmd = {}
@@ -138,78 +167,31 @@ lspconfig.msbuild_project_tools_server.setup {
     on_attach = on_attach,
 }
 
--- local xsdTemplates = os.getenv('HOME') .. "/.local/share/nvim/xsd-templates/"
--- require 'lspconfig'.lemminx.setup {
---     settings = {
---         xml = {
---             fileAssociations = {
---                 {
---                     systemId = xsdTemplates .. "XamlPresentation2006.xsd",
---                     pattern = ".xaml"
---                 }
---             }
---         }
---     },
---     on_attach = on_attach,
--- }
+local roslynCmd = {}
+if vim.fn.has('win32') == 1 then
+    roslynCmd = {
+        'dotnet',
+        'C:\\Program Files\\Roslyn\\Microsoft.CodeAnalysis.LanguageServer.dll',
+        "--logLevel=Information",
+        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+        "--stdio",
+    }
+elseif vim.fn.has('unix') == 1 then
+    roslynCmd = {
+        'dotnet',
+        '/usr/local/lib/roslyn/Microsoft.CodeAnalysis.LanguageServer.dll',
+        "--logLevel=Information",
+        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+        "--stdio",
+    }
+end
 
--- require 'lspconfig'.clangd.setup {
---     cmd = {
---         "clangd",
---         "--query-driver=/usr/bin/arm-none-eabi-g++"
---     },
---     on_attach = on_attach,
--- }
-
--- require 'lspconfig'.omnisharp.setup {
---     cmd = { "C:\\Program Files\\omnisharp\\OmniSharp.exe" },
---     filetypes = { "cs", "vb" },
---     settings = {
---         FormattingOptions = {
---             -- Enables support for reading code style, naming convention and analyzer
---             -- settings from .editorconfig.
---             EnableEditorConfigSupport = true,
---             -- Specifies whether 'using' directives should be grouped and sorted during
---             -- document formatting.
---             OrganizeImports = true,
---         },
---         MsBuild = {
---             -- If true, MSBuild project system will only load projects for files that
---             -- were opened in the editor. This setting is useful for big C# codebases
---             -- and allows for faster initialization of code navigation features only
---             -- for projects that are relevant to code that is being edited. With this
---             -- setting enabled OmniSharp may load fewer projects and may thus display
---             -- incomplete reference lists for symbols.
---             LoadProjectsOnDemand = false,
---         },
---         RoslynExtensionsOptions = {
---             -- Enables support for roslyn analyzers, code fixes and rulesets.
---             EnableAnalyzersSupport = true,
---             -- Enables support for showing unimported types and unimported extension
---             -- methods in completion lists. When committed, the appropriate using
---             -- directive will be added at the top of the current file. This option can
---             -- have a negative impact on initial completion responsiveness,
---             -- particularly for the first few completion sessions after opening a
---             -- solution.
---             EnableImportCompletion = true,
---             -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
---             -- true
---             AnalyzeOpenDocumentsOnly = false,
---         },
---         Sdk = {
---             -- Specifies whether to include preview versions of the .NET SDK when
---             -- determining which version to use for project loading.
---             IncludePrereleases = false,
---         },
---     },
---     on_attach = on_attach,
---     -- handlers = {
---     --     ["textDocument/definition"] = omnisharp_extended.definition_handler,
---     --     ["textDocument/typeDefinition"] = omnisharp_extended.type_definition_handler,
---     --     ["textDocument/references"] = omnisharp_extended.references_handler,
---     --     ["textDocument/implementation"] = omnisharp_extended.implementation_handler,
---     -- }
--- }
+require("roslyn").setup({
+        config = {
+        cmd = roslynCmd,
+        on_attach = on_attach
+    },
+})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),

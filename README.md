@@ -31,7 +31,7 @@ Can validate it works via executing `netcoredbg --version` in your terminal
 
 Also, and very importantly, I have a configuration setup to remote debug with netcoredbg **over ssh targeting windows**, for more info see below
 
-### Roslyn LSP
+### msbuild LSP (.sln, .csproj, etc)
 Download the latest copy of msbuild-project-tools-server here: https://github.com/tintoy/msbuild-project-tools-server/releases/latest
 
 Unzip it to the following locations:
@@ -39,6 +39,27 @@ Unzip it to the following locations:
 * **Linux:** /usr/local/lib/msbuild-project-tools-server/
 
 (Note that the file `MSBuildProjectTools.LanguageServer.Host.dll` should exist in this directory if you did it right, IE the file `/usr/local/lib/msbuild-project-tools-server/MSBuildProjectTools.LanguageServer.Host.dll` should exist now)
+
+### Roslyn LSP (C#, .NET)
+1. Download the latest copy of `Microsoft.CodeAnalysis.LanguageServer`
+
+* Linux x64: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.linux-x64
+
+* Windows x64: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.win-x64
+
+(Note other architectures are supported but I just linked the two most obvious ones)
+
+2. It will be a .nupkg file, just rename it to a .zip and unzip it.
+
+3. You will find the actual LSP folder at `./content/LanguageServer/<YourArch>/` in the zip
+
+4. Copy that folder to the following:
+
+* Linux: `/usr/local/lib/roslyn/`
+
+* Windows: `C:\Program Files\Roslyn\` 
+
+(Note that the file `Microsoft.CodeAnalysis.LanguageServer.dll` should exist in this directory if you did it right, IE the file `/usr/local/lib/roslyn/Microsoft.CodeAnalysis.LanguageServer.dll` should exist now)
 
 #### .editorconfig
 Here is my recommended .editorconfig file to go in `~`
@@ -67,10 +88,18 @@ https://github.com/OmniSharp/omnisharp-roslyn/issues/2574#issuecomment-204509673
 ### ts_ls LSP (Typescript / Json)
 `npm install -g typescript typescript-language-server`
 
+### svelte LSP
+`npm install -g svelte-language-server`
+
 ### Pi Pico C++ LSP
 https://clangd.llvm.org/installation
 
 Clangd is configured to utilize the pi pico g++ installer. I could probably add configuration to switch which query engine to use but pretty much the only time I use C++ nowadays is for compiling to arm SBCs so...
+
+### Python LSPs
+1. Install uv: https://docs.astral.sh/uv/getting-started/installation/#installation-methods
+2. Install ruff LSP: `uv tool install ruff@latest`
+3. Install pyright typechecker LSP: `uv tool install pyright` 
 
 ### XML LSP (lemminx vscode)
 Download the latest binary from here: https://github.com/redhat-developer/vscode-xml/releases/latest
@@ -119,6 +148,12 @@ Example `launch.json` file:
 proj-loader is configured to use the found project root (where your .sln file is) as its relative cwd for the launch.json, so you very likely wwill always want your `cwd` entry to be similiar to the one above.
 
 Note that nvim-dap supports multiple matching configs for the same build out of the box, and if multiple matches are found it will just prompt you with which one you want to use, allowing you to define multiple build configs in your `launch.json` file
+
+# Connect to an already running process
+
+If you want something a bit faster and more ad-hoc, you can just use the "Build and Run" shortcut instead and select "Connect to a process", it'll then give you a fuzzy searchab;e process list to pick from and connect to.
+
+To be honest this has now started to become my preferred approach, once you know what to search for it becomes pretty fast to quickly connect.
 
 # Remote debugging over SSH targeting a Windows OpenSSH Server
 
