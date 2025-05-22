@@ -189,7 +189,18 @@ end
 require("roslyn").setup({
         config = {
         cmd = roslynCmd,
-        on_attach = on_attach
+        on_attach = on_attach,
+        settings = {
+            ["csharp|background_analysis"] = {
+                background_analysis = {
+                    dotnet_analyzer_diagnostics_scope = "fullSolution",
+                    dotnet_compiler_diagnostics_scope = "fullSolution"
+                }
+            },
+            ["csharp|formatting"] = {
+                dotnet_organize_imports_on_format = true
+            }
+        }
     },
 })
 
