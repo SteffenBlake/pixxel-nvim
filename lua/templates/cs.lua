@@ -20,7 +20,7 @@ local function on_obj_select(obj_type, relative_path, filename, callback)
     if (obj_type == 'none') then
         return
     end
-    local namespace = relative_path:gsub("/", ".")
+    local namespace = relative_path:gsub("/", "."):gsub("\\", ".")
     local obj_name = vim.fn.fnamemodify(filename, ':r')
 
     local symbol_text = ''
