@@ -1,3 +1,5 @@
+local job_indicator = { require("easy-dotnet.ui-modules.jobs").lualine }
+
 local M = {}
 
 local function getWords()
@@ -12,7 +14,7 @@ function M.setup()
             section_separators = { left = '', right = '' },
         },
         sections = {
-            lualine_a = { 'mode' },
+            lualine_a = { 'mode', job_indicator },
             lualine_b = { 'branch', 'diagnostics' },
             lualine_c = { 'filename' },
             lualine_x = { 'encoding', 'fileformat', 'filetype' },

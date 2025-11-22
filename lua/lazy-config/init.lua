@@ -51,6 +51,12 @@ local setup =
         opts = {
         }
     },
+    {
+      "GustavEikaas/easy-dotnet.nvim",
+      -- 'nvim-telescope/telescope.nvim' or 'ibhagwan/fzf-lua' or 'folke/snacks.nvim'
+      -- are highly recommended for a better experience
+      dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
+    },
     -- Decompiler and Source Gen support for omnisharp
     -- 'Hoffs/omnisharp-extended-lsp.nvim',
     -- Adds cycling for overloads in signature popups for LSP

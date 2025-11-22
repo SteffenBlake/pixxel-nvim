@@ -1,14 +1,15 @@
-local projLoader = require('dap-config.proj-loader')
 local dap = require('dap')
 local dapui = require("dapui")
 local nvimTreeApi = require('nvim-tree.api')
 
--- dap.defaults.fallback.external_terminal = {
---     command = 'tmux';
---     args = {'new-window', '-c', '"#{pane_current_path}"'};
--- }
-
--- dap.defaults.fallback.force_external_terminal = true
+dap.adapters.mono = function(callback, config)
+    callback({
+        type = 'server',
+        command = 'mono-debug',
+        port = 4711,
+        args = { '--server' },
+    })
+end
 
 dap.adapters.cs = function(callback, config)
     if (config.request ~= "launch") then
@@ -67,17 +68,13 @@ dap.configurations.cs = {
         request = "attach",
         processId = require('dap.utils').pick_process,
     },
-}
-
-dap.adapters.dart = {
-    type = 'executable',
-    command = 'flutter',
-    args = { 'debug_adapter' }
-}
-dap.adapters.flutter = {
-    type = 'executable',
-    command = 'flutter',
-    args = { 'debug_adapter' }
+    {
+        type = "mono",
+        name = "attach - vscode-mono-debug",
+        address = "localhost",
+        port = 10000,
+        request = "attach",
+    },
 }
 
 dapui.setup()
@@ -100,18 +97,5 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
         vim.api.nvim_set_current_win(vim.fn.bufwinid(args.buf))
     end)
 })
-
-local projLoaderOpts = {
-    builders = {},
-    setCwd = true
-}
-
-projLoaderOpts.builders["*.csproj"] =
-{
-    cmd = function(projPath) return { "dotnet", "build", "-c", "Debug", projPath } end,
-    verbose = false
-}
-
-projLoader.setup(projLoaderOpts)
 
 vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })

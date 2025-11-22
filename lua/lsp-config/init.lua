@@ -1,8 +1,8 @@
-local lspconfig = require('lspconfig')
 local utils = require("utils")
 
 require('lsp-config.autopairs-config').setup()
 require('lsp-config.comment-config').setup()
+require('lsp-config.easy-dotnet-config').setup()
 require('lsp-config.fzf-lua-config')
 require('lsp-config.cmp-config').setup()
 -- require('lsp-config.llm-config').setup()
@@ -75,12 +75,12 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
     capabilities = capabilities,
     on_attach = on_attach,
-}
+})
 
-lspconfig.lua_ls.setup{
+vim.lsp.config('lua_ls', {
   on_init = function(client)
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
@@ -112,35 +112,35 @@ lspconfig.lua_ls.setup{
   settings = {
     Lua = {}
   }
-}
+})
 
-lspconfig.svelte.setup {
+vim.lsp.config('svelte', {
     capabilities = capabilities,
     on_attach = on_attach,
-}
+})
 
-lspconfig.html.setup {
+vim.lsp.config('html', {
     capabilities = capabilities,
     filetypes = { "html", "hbs", "handlebars" },
     on_attach = on_attach,
-}
+})
 
-lspconfig.jsonls.setup {
+vim.lsp.config('jsonls', {
     capabilities = capabilities,
     on_attach = on_attach,
-}
+})
 
-lspconfig.dartls.setup {
+vim.lsp.config('dartls', {
     capabilities = capabilities,
     on_attach = on_attach,
-}
+})
 
-lspconfig.ruff.setup {
+vim.lsp.config('ruff', {
     capabilities = capabilities,
     on_attach = on_attach,
-}
+})
 
-lspconfig.pyright.setup {
+vim.lsp.config('pyright', {
     capabilities = capabilities,
     on_attach = on_attach,
     settings = {
@@ -156,7 +156,7 @@ lspconfig.pyright.setup {
             },
         },
     }
-}
+})
 
 local msbuildCmd = {}
 if vim.fn.has('win32') == 1 then
@@ -171,12 +171,12 @@ elseif vim.fn.has('unix') == 1 then
     }
 end
 
-lspconfig.msbuild_project_tools_server.setup {
+vim.lsp.config('msbuild_project_tools_server', {
     capabilities = capabilities,
     cmd = msbuildCmd,
     filetypes = { "csproj", "sln" },
     on_attach = on_attach,
-}
+})
 
 local roslynCmd = {}
 if vim.fn.has('win32') == 1 then

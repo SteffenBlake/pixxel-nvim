@@ -18,7 +18,6 @@ vim.o.wrap = false;
 
 require('lazy-config')
 
-require('console-config')
 require('dap-config')
 require('filetypes-config')
 require('git-config')
