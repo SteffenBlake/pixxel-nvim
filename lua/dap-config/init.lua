@@ -2,17 +2,17 @@ local M = {}
 
 function M.setup(ctx)
     table.insert(ctx.lazy,
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = {
-            "mfussenegger/nvim-dap",
-            "theHamsta/nvim-dap-virtual-text",
-            "nvim-neotest/nvim-nio"
-        }
-    })
+        {
+            "rcarriga/nvim-dap-ui",
+            dependencies = {
+                "mfussenegger/nvim-dap",
+                "theHamsta/nvim-dap-virtual-text",
+                "nvim-neotest/nvim-nio"
+            }
+        })
 end
 
-function M.run(ctx)
+function M.run(_)
     local dap = require('dap')
     local dapui = require("dapui")
     local nvimTreeApi = require('nvim-tree.api')
@@ -37,22 +37,21 @@ function M.run(ctx)
             vim.api.nvim_set_current_win(vim.fn.bufwinid(args.buf))
         end)
     })
-   
+
     vim.diagnostic.config({
         signs = {
             DapBreakpoint = { text = '🔴', texthl = '', linehl = '', numhl = '' }
         }
     })
-    
+
     local wk = require('which-key')
     wk.add({
-        { "<leader>dr", dap.continue, desc = "Build and [r]un" },
+        { "<leader>dr", dap.continue,          desc = "Build and [r]un" },
         { "<leader>db", dap.toggle_breakpoint, desc = "Toggle [b]reakpoint" },
-        { "<leader>dl", dap.list_breakpoints, desc = "[l]ist Breakpoints" },
+        { "<leader>dl", dap.list_breakpoints,  desc = "[l]ist Breakpoints" },
         { "<leader>dc", dap.clear_breakpoints, desc = "[c]lear breakpoints" },
-        { "<leader>dt", dapui.toggle, desc = "[t]oggle DAP UI" },
+        { "<leader>dt", dapui.toggle,          desc = "[t]oggle DAP UI" },
     })
-
 end
 
 return M

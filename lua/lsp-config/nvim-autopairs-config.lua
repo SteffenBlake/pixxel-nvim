@@ -7,8 +7,7 @@ function M.setup(ctx)
     })
 end
 
-
-function M.run(ctx)
+function M.run(_)
     require("nvim-autopairs").setup {}
 end
 

@@ -2,20 +2,20 @@ local M = {}
 
 function M.setup(ctx)
     table.insert(ctx.lazy,
-    {
-        'Issafalcon/lsp-overloads.nvim'
-    })
+        {
+            'Issafalcon/lsp-overloads.nvim'
+        })
 end
 
-local function on_attach(client, bufnr)
-    local wk = require('which-key') 
+local function on_attach(client, _)
+    local wk = require('which-key')
 
     if client.server_capabilities.signatureHelpProvider then
-    local lspOverloads = require('lsp-overloads');
+        local lspOverloads = require('lsp-overloads');
         wk.add({
             { "<c-s>", ":LspOverloadsSignature<CR>", desc = "Show [C-S]ignatures", mode = { 'n', 'i' } },
         })
-        
+
         lspOverloads.setup(client, {
             -- UI options are mostly the same as those passed to vim.lsp.util.open_floating_preview
             ui = {
@@ -49,7 +49,7 @@ local function on_attach(client, bufnr)
     end
 end
 
-function M.run(ctx)
+function M.run(_)
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)

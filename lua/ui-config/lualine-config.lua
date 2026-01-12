@@ -5,8 +5,7 @@ local function getWords()
 end
 
 function M.setup(ctx)
-    table.insert(ctx.lazy,
-    {
+    table.insert(ctx.lazy, {
         'nvim-lualine/lualine.nvim'
     })
 

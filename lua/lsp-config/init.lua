@@ -8,8 +8,7 @@ local treesitter = require('lsp-config.treesitter-config')
 local M = {}
 
 function M.setup(ctx)
-    table.insert(ctx.lazy,
-    {
+    table.insert(ctx.lazy, {
         'neovim/nvim-lspconfig',
     })
 
@@ -28,11 +27,12 @@ function M.run(ctx)
     nvimAutopairs.run(ctx)
     nvimComment.run(ctx)
     treesitter.run(ctx)
-    
+
     local wk = require('which-key')
     wk.add({
-        { "<leader>e", vim.diagnostic.open_float, desc = "Open floating diagnostic message", mode = { "n" } },
-        { "<leader>rf", vim.lsp.buf.format, desc = "[f]ormat current buffer with LSP", mode = { "n", "v" } },
+        { "<leader>e",  vim.diagnostic.open_float, desc = "Open floating diagnostic message", mode = { "n" } },
+        { "<leader>rf", vim.lsp.buf.format,        desc = "[f]ormat current buffer with LSP", mode = { "n", "v" } },
+        { "<leader>rr", vim.lsp.buf.rename,        desc = "[r]ename" },
     })
 end
 

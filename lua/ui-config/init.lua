@@ -13,8 +13,7 @@ function M.setup(ctx)
     telescope.setup(ctx)
     theme.setup(ctx)
 
-    table.insert(ctx.lazy,
-    {
+    table.insert(ctx.lazy, {
         -- Highlights usages of selected symbols
         'RRethy/vim-illuminate',
         -- Shows indent lines even on blank lines

@@ -4,7 +4,7 @@ function M.setup(ctx)
     table.insert(ctx.lazy, 'terrortylor/nvim-comment')
 end
 
-function M.run(ctx)
+function M.run(_)
     require('nvim_comment').setup({
         line_mapping = '<C-_><C-_>',
         operator_mapping = '<C-_>'

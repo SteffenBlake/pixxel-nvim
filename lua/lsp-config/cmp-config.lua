@@ -11,7 +11,7 @@ function M.setup(ctx)
     })
 end
 
-function M.run(ctx)
+function M.run(_)
     local cmp = require('cmp')
     cmp.setup {
         completion = {
@@ -47,7 +47,7 @@ function M.run(ctx)
             fields = { "kind", "abbr", "menu" },
             format = function(entry, vim_item)
                 local kind = require("lspkind").cmp_format({
-                    mode = "symbol_text", maxwidth = 50 
+                    mode = "symbol_text", maxwidth = 50
                 })(entry, vim_item)
 
                 local strings = vim.split(kind.kind, "%s", { trimempty = true })

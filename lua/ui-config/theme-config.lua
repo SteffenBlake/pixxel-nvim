@@ -1,8 +1,7 @@
 local M = {}
 
 function M.setup(ctx)
-    table.insert(ctx.lazy,
-    {
+    table.insert(ctx.lazy, {
         -- Theme inspired by Atom
         'navarasu/onedark.nvim',
         priority = 1000,
@@ -16,7 +15,7 @@ function M.run(ctx)
     })
     onedark.load()
 
-    -- Fix overrides 
+    -- Fix overrides
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerSolution", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerProject", { link = "Character" })
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerTest", { link = "Normal" })
@@ -29,7 +28,6 @@ function M.run(ctx)
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerFloatVariable", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerVirtualVariable", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerVirtualException", { link = "DiagnosticError" })
-
 end
 
 return M

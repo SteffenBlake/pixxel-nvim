@@ -19,7 +19,7 @@ vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a T
 vim.o.softtabstop = 4  -- Number of spaces inserted instead of a TAB character
 vim.o.shiftwidth = 4   -- Number of spaces inserted when indenting
 
-vim.o.conceallevel=3
+vim.o.conceallevel = 3
 
 -- copy block mode
 vim.o.ve = 'block'
@@ -83,11 +83,15 @@ console.setup(context)
 git.setup(context)
 
 if vim.env.NIX_ENABLE_DOTNET == "1" then
-  require('dotnet-config').setup(context)
+    require('dotnet-config').setup(context)
 end
 
 if vim.env.NIX_ENABLE_RUST == "1" then
-  require('rust-config').setup(context)
+    require('rust-config').setup(context)
+end
+
+if vim.env.NIX_ENABLE_LUA == "1" then
+    require('lua-config').setup(context)
 end
 
 -- NOTE : RUN
@@ -100,11 +104,15 @@ git.run(context)
 lsp.run(context)
 
 if vim.env.NIX_ENABLE_DOTNET == "1" then
-  require('dotnet-config').run(context)
+    require('dotnet-config').run(context)
 end
 
 if vim.env.NIX_ENABLE_RUST == "1" then
-  require('rust-config').run(context)
+    require('rust-config').run(context)
+end
+
+if vim.env.NIX_ENABLE_LUA == "1" then
+    require('lua-config').run(context)
 end
 
 -- UI must always run last

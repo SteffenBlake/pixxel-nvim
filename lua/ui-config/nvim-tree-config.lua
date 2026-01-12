@@ -1,8 +1,7 @@
 local M = {}
 
 function M.setup(ctx)
-    table.insert(ctx.lazy,
-    {
+    table.insert(ctx.lazy, {
         "nvim-tree/nvim-tree.lua",
         lazy = false,
         dependencies = {
@@ -11,7 +10,7 @@ function M.setup(ctx)
     })
 end
 
-function M.run(ctx)
+function M.run(_)
     local nvimTree = require('nvim-tree')
     local nvimTreeApi = require("nvim-tree.api")
 
@@ -22,7 +21,7 @@ function M.run(ctx)
         view = {
             width = 30,
         },
-         diagnostics = {
+        diagnostics = {
             enable = true,
             show_on_dirs = true,
         },
