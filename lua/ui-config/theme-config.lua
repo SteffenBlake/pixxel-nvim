@@ -1,12 +1,22 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy,
+    {
+        -- Theme inspired by Atom
+        'navarasu/onedark.nvim',
+        priority = 1000,
+    })
+end
+
+function M.run(ctx)
     local onedark = require('onedark')
     onedark.setup({
         style = 'cool'
     })
     onedark.load()
 
+    -- Fix overrides 
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerSolution", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerProject", { link = "Character" })
     vim.api.nvim_set_hl(0, "EasyDotnetTestRunnerTest", { link = "Normal" })
@@ -19,6 +29,7 @@ function M.setup()
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerFloatVariable", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerVirtualVariable", { link = "Question" })
     vim.api.nvim_set_hl(0, "EasyDotnetDebuggerVirtualException", { link = "DiagnosticError" })
+
 end
 
 return M

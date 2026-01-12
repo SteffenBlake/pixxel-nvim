@@ -1,9 +1,15 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy,
+    {
+        'lewis6991/gitsigns.nvim',
+    })
+end
+
+function M.run(ctx)
     require('gitsigns').setup(
         {
-            -- See `:help gitsigns.txt`
             signs = {
                 add = { text = '+' },
                 change = { text = '~' },

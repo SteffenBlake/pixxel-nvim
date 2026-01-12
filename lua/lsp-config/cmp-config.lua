@@ -1,17 +1,19 @@
 local M = {}
 
-function M.setup()
-    local cmp = require('cmp')
-    local luasnip = require('luasnip')
-    require('luasnip.loaders.from_vscode').lazy_load()
-    luasnip.config.setup {}
-
-    cmp.setup {
-        snippet = {
-            expand = function(args)
-                luasnip.lsp_expand(args.body)
-            end,
+function M.setup(ctx)
+    table.insert(ctx.lazy, {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            -- Adds LSP completion capabilities
+            'hrsh7th/cmp-nvim-lsp',
+            'onsails/lspkind.nvim',
         },
+    })
+end
+
+function M.run(ctx)
+    local cmp = require('cmp')
+    cmp.setup {
         completion = {
             completeopt = 'menu,noselect,noinsert'
         },
@@ -34,7 +36,6 @@ function M.setup()
         },
         sources = {
             { name = 'nvim_lsp' },
-            { name = 'luasnip' },
         },
         window = {
             completion = {
@@ -45,8 +46,12 @@ function M.setup()
         formatting = {
             fields = { "kind", "abbr", "menu" },
             format = function(entry, vim_item)
-                local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                local kind = require("lspkind").cmp_format({
+                    mode = "symbol_text", maxwidth = 50 
+                })(entry, vim_item)
+
                 local strings = vim.split(kind.kind, "%s", { trimempty = true })
+
                 kind.kind = " " .. (strings[1] or "") .. " "
                 kind.menu = "    (" .. (strings[2] or "") .. ")"
                 return kind

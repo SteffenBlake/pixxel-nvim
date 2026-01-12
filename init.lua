@@ -1,8 +1,17 @@
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-local keybinds = require('keybinds')
-keybinds.register_leader()
+
+local console = require('console-config')
+local dap = require('dap-config')
+local git = require('git-config')
+local lazy = require('lazy-config')
+local lsp = require('lsp-config')
+local ui = require('ui-config')
+local whichKey = require('which-key-config')
+
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 vim.o.cmdheight = 1    -- Height for the command section at the bottom
 vim.o.tabstop = 4      -- A TAB character looks like 4 spaces
@@ -12,25 +21,11 @@ vim.o.shiftwidth = 4   -- Number of spaces inserted when indenting
 
 vim.o.conceallevel=3
 
+-- copy block mode
 vim.o.ve = 'block'
 
+-- Disable wrap
 vim.o.wrap = false;
-
-require('lazy-config')
-
-require('dap-config')
-require('filetypes-config')
-require('git-config')
-require('lsp-config')
-require('nav-config')
-require('test-config')
-require('ui-config')
-
--- NOTE: Must be called after lazy-config
-keybinds.setup_core()
-
--- [[ Setting options ]]
--- See `:help vim.o`
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -73,13 +68,44 @@ vim.o.completeopt = 'menuone,noselect'
 
 vim.o.termguicolors = true
 
--- [[ Basic Keymaps ]]
--- See `:help vim.keymap.set()`
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+local context = {};
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- NOTE : SETUP
+
+lazy.setup(context)
+whichKey.setup(context)
+ui.setup(context)
+lsp.setup(context)
+
+dap.setup(context)
+console.setup(context)
+git.setup(context)
+
+if vim.env.NIX_ENABLE_DOTNET == "1" then
+  require('dotnet-config').setup(context)
+end
+
+if vim.env.NIX_ENABLE_RUST == "1" then
+  require('rust-config').setup(context)
+end
+
+-- NOTE : RUN
+lazy.run(context)
+
+whichKey.run(context)
+dap.run(context)
+console.run(context)
+git.run(context)
+lsp.run(context)
+
+if vim.env.NIX_ENABLE_DOTNET == "1" then
+  require('dotnet-config').run(context)
+end
+
+if vim.env.NIX_ENABLE_RUST == "1" then
+  require('rust-config').run(context)
+end
+
+-- UI must always run last
+ui.run(context)

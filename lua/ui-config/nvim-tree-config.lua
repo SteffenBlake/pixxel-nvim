@@ -1,6 +1,17 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy,
+    {
+        "nvim-tree/nvim-tree.lua",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+    })
+end
+
+function M.run(ctx)
     local nvimTree = require('nvim-tree')
     local nvimTreeApi = require("nvim-tree.api")
 
@@ -21,19 +32,6 @@ function M.setup()
         filters = {
             dotfiles = true,
         },
-        -- on_attach = function(bufnr)
-        --     local api = require('nvim-tree.api')
-        --
-        --     local function opts(desc)
-        --       return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        --     end
-        --
-        --     vim.keymap.set('n', 'A', function()
-        --       local node = api.tree.get_node_under_cursor()
-        --       local path = node.type == "directory" and node.absolute_path or vim.fs.dirname(node.absolute_path)
-        --       require("easy-dotnet").create_new_item(path)
-        --     end, opts('Create file from dotnet template'))
-        -- end
     })
 
     nvimTreeApi.events.subscribe(nvimTreeApi.events.Event.FileCreated, function(file)
@@ -57,12 +55,18 @@ function M.setup()
         end
     })
 
+    -- Auto focus item on the tree
     vim.api.nvim_create_autocmd("BufWinEnter", {
         pattern = "*.*",
         callback = function()
             nvimTreeApi.tree.find_file({ focus = false, open = false })
         end
     })
+
+    local wk = require('which-key')
+    wk.add(
+        { "<leader>ft", nvimTreeApi.tree.toggle, desc = "[t]oggle file tree" }
+    )
 end
 
 return M

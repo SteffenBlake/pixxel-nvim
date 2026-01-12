@@ -1,21 +1,25 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy, {
+        -- Highlight, edit, and navigate code
+        'nvim-treesitter/nvim-treesitter',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+        },
+        build = ':TSUpdate',
+    })
+
+    ctx.treesitter_languages = {}
+end
+
+function M.run(ctx)
     local treeSitterConfigs = require('nvim-treesitter.configs')
 
     vim.defer_fn(function()
         treeSitterConfigs.setup {
             -- Add languages to be installed here that you want installed for treesitter
-            ensure_installed = {
-                'c', 'cpp', 'go',
-                'lua',
-                'python',
-                'rust', 'tsx',
-                'javascript', 'typescript',
-                'vimdoc', 'vim',
-                'bash',
-                'markdown_inline'
-            },
+            ensure_installed = ctx.treesitter_languages,
 
             -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
             auto_install = true,

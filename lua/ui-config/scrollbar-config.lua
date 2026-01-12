@@ -1,6 +1,13 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy,
+    {
+        "petertriho/nvim-scrollbar",
+    })
+end
+
+function M.run(ctx)
     -- Handles the scrollbar hiding the last char of a line
     --vim.opt.virtualedit = "onemore"
     

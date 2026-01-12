@@ -1,6 +1,13 @@
 local M = {}
 
-function M.setup()
+function M.setup(ctx)
+    table.insert(ctx.lazy,
+    {
+        'akinsho/git-conflict.nvim',
+    })
+end
+
+function M.run(ctx)
     local gitConflict = require('git-conflict')
 
     gitConflict.setup({
@@ -14,6 +21,17 @@ function M.setup()
             incoming = 'DiffAdd',
             current = 'DiffText',
         }
+    })
+
+    local wk = require('which-key')
+    wk.add({
+        { "<leader>gc", "<cmd>GitConflictListQf<cr>", desc = "List [c]onflicts" },
+        { "<leader>gn", "<cmd>GitConflictChooseNone<cr>", desc = "Choose [n]one" },
+        { "<leader>gy", "<cmd>GitConflictChooseOurs<cr>", desc = "Choose [y]ours" },
+        { "<leader>gt", "<cmd>GitConflictChooseTheirs<cr>", desc = "Choose [t]heirs" },
+        { "<leader>gb", "<cmd>GitConflictChooseBoth<cr>", desc = "Choose [b]oth" },
+        { "<leader>gh", "<cmd>GitConflictPrevConflict<cr>", desc = "Prev conflict" },
+        { "<leader>gl", "<cmd>GitConflictNextConflict<cr>", desc = "Next Conflict" },
     })
 end
 
