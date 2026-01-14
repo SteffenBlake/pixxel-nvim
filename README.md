@@ -9,6 +9,7 @@ My personal Neovim configuration, primarly focused on dotnet web dev
 export NIX_ENABLE_DOTNET=1
 export NIX_ENABLE_RUST=1
 export NIX_ENABLE_LUA=1
+export NIX_ENABLE_COPILOT=1
 ```
 
 Each toggles on/off the behaviors for neovim, to reduce unnecessary plugins being installed/loaded
@@ -282,20 +283,37 @@ Opens up a telescope picker showing for declared symbols in the current buffer
 ### Diagnostic [W]arnings
 Opens up a telescope picker for all diagnostic warnings of the current buffer
 
+## [L]LM
+Category for all keybinds regarding LLM/Copilot chat interactions
+
+### [T]oggle Copilot chat
+Toggles the Copilot chat window open/closed
+
+### [S]top Copilot chat output
+Stops the current Copilot chat response generation
+
+### View [P]rompt templates
+Opens a picker to view and select from available Copilot chat prompt templates (available in both normal and visual mode)
+
+### [E]xplain current selection
+Asks Copilot to explain the current selection or context (available in both normal and visual mode)
+
+### [R]eview current selection
+Asks Copilot to review the current selection or context (available in both normal and visual mode)
+
+### Pick [F]iles for chat context
+Opens a file picker to select multiple files to add as context to the Copilot chat
+
+### Fi[X] current selection
+Asks Copilot to fix issues in the current selection or context (available in both normal and visual mode)
+
+### [O]ptimize current selection
+Asks Copilot to optimize the current selection or context (available in both normal and visual mode)
+
+### [D]ocument current selection
+Asks Copilot to generate documentation for the current selection or context (available in both normal and visual mode)
+
 ## [T]ests
-Category for all keybinds regarding tests
-
-### [D]ebug the nearest test
-Triggers a debug session with nvim-dap of the nearest declared test to the cursor
-
-### Test the nearest [F]ile
-Runs the full test suite for the opened file
-
-### Run the [N]earest test
-Runs the nearest declared test to the cursor
-
-### [S]ummarize test coverage
-Shows a popup browseable test report coverage summary, based on a loaded in Test Coverage Report (loaded in via the above command)
 
 # Examples
 ### Editting
