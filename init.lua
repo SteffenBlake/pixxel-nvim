@@ -94,6 +94,11 @@ if vim.env.NIX_ENABLE_LUA == "1" then
     require('lua-config').setup(context)
 end
 
+
+if vim.env.NIX_ENABLE_COPILOT == "1" then
+    require('copilot-config').setup(context)
+end
+
 -- NOTE : RUN
 lazy.run(context)
 
@@ -113,6 +118,10 @@ end
 
 if vim.env.NIX_ENABLE_LUA == "1" then
     require('lua-config').run(context)
+end
+
+if vim.env.NIX_ENABLE_COPILOT == "1" then
+    require('copilot-config').run(context)
 end
 
 -- UI must always run last

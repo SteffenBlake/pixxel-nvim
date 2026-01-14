@@ -29,6 +29,8 @@ function M.run(ctx)
         { "<leader>tb", group = "from [b]uffer" },
 
         { "<leader>p",  group = "[p]roject" },
+
+        { "<leader>l",  group = "[l]lm stuff" },
     })
 end
 
