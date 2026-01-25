@@ -140,9 +140,6 @@ Git integration for multiple other plugins, primarily used to show del/add/modif
 ## [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) 
 VSCode style File browser on lefthand side + tabs on the top. nvim-tree supports a bunch of commands for adding/removing/changing files and directories
 
-## [harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
-Navigation tool for quickly "remembering" the last place you were in a buffer when you change buffers, providing a "history" style functionality to quickly hop back to the last place you were in the prior buffer. Has "hot" memory for quick swapping between 4 buffers
-
 ## [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar)
 Pretty but minimalist scrollbar on buffers. Has both `lsp-config` integration to show potential code warnings/errors/suggestions, as well as git integration to show status of individual lines
 
@@ -165,6 +162,16 @@ Extremely handy plugin for toggling visibility of the signature of methods, as w
 `alt-s` - Hide the overloads popup  
 `ctrl-h/l` - browse the paramaters and their definitions of the current signature  
 `ctrl-j/k` - browse the list of overloads  
+
+## quicker.nvim + nvim-bqf
+Extremely powerful pair of plugins that upgrade the quickfix list to new heights.
+* Further fuzzy filtering of the quickfix list
+* Edit the quickfix list like a buffer itself, and write to apply its changes
+* Preview popup window for hovering items in the quickfix list (to help with editing)
+
+[https://github.com/stevearc/quicker.nvim]
+[https://github.com/kevinhwang91/nvim-bqf]
+
 # Keybinds
 
 Keybinds are setup (aside from the handful that need to work in insert mode) to follow three steps to their chords.
@@ -174,6 +181,7 @@ Keybinds are setup (aside from the handful that need to work in insert mode) to 
 
 For example, for the command "Format" below, the chord would be: 
 * `<Spacebar>rf` for Leader -> [R]efactor -> [F]ormat
+
 
 ## [C]onsole
 ### (Normal Mode) [E]xecute current line
